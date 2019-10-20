@@ -22,15 +22,26 @@ export class Loading extends Phaser.Scene {
 
   create() {
     this.anims.create({
-      key: 'knight_walk',
+      key: 'knight_run',
       frames: this.anims.generateFrameNames('dungeon-sprites', {
         start: 0,
         end: 3,
         prefix: 'frames/knight_m_run_anim_f', suffix: '.png'
       }),
-      frameRate: 20,
+      frameRate: 10,
       repeat: -1
-    })
+    });
+
+    this.anims.create({
+      key: 'knight_idle',
+      frames: this.anims.generateFrameNames('dungeon-sprites', {
+        start: 0,
+        end: 3,
+        prefix: 'frames/knight_m_idle_anim_f', suffix: '.png'
+      }),
+      frameRate: 10,
+      repeat: -1
+    });
 
     this.add.text(20, 20, 'Loading game...');
     this.scene.start('playGame');

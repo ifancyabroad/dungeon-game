@@ -6,10 +6,16 @@ import { Game } from "./scenes/Game";
 const config = {
   type: Phaser.AUTO,
   width: 800,
-  height: 600,
+  height: 576,
   backgroundColor: 0x000000,
   scene: [Loading, Game],
   pixelArt: true,
+  physics: {
+    default: 'arcade',
+    arcade: {
+      debug: false
+    }
+  }
 };
 
 const game = new Phaser.Game(config);
