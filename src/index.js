@@ -11,9 +11,9 @@ const config = {
   scene: [Loading, Game],
   pixelArt: true,
   physics: {
-    default: 'arcade',
-    arcade: {
-      gravity: { y: 0 },
+    default: 'matter',
+    matter: {
+      gravity: { y: 0, x: 0 },
       debug: false
     }
   }

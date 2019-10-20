@@ -6,10 +6,9 @@ export class Hero extends Entity {
   constructor(scene, x, y, sprite) {
     super(scene, x, y, sprite);
 
-    // Set player speed
-    this.speed = 100;
+    // Set player speed and allow interaction
+    this.speed = 2;
     this.setInteractive();
-    this.setCollideWorldBounds(true);
   }
 
   update(keys) {

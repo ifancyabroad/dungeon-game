@@ -5,6 +5,7 @@ import rooms from '../assets/rooms/0x72_DungeonTilesetII_v1.3.png';
 import roomsData from '../assets/rooms/basic.json';
 
 import mKnightSprite from '../assets/texture-atlas/frames/knight_m_idle_anim_f0.png';
+import regularSword from '../assets/texture-atlas/frames/weapon_regular_sword.png';
 
 export class Loading extends Phaser.Scene {
 
@@ -15,6 +16,7 @@ export class Loading extends Phaser.Scene {
   preload() {
     this.load.atlas('dungeon-sprites', textureAtlas, textureAtlasData);
     this.load.image('player', mKnightSprite);
+    this.load.image('sword', regularSword);
 
     this.load.image('tiles', rooms);
     this.load.tilemapTiledJSON('room', roomsData);
