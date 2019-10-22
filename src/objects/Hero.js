@@ -1,4 +1,5 @@
 import { Entity } from "./Entity";
+import { Weapon } from "./Weapon";
 
 export class Hero extends Entity {
 
@@ -6,45 +7,53 @@ export class Hero extends Entity {
   constructor(scene, x, y, sprite) {
     super(scene, x, y, sprite);
 
-    // Set player speed and allow interaction
-    this.speed = 2;
-    this.setInteractive();
+    // Set player speed and allow interaction    
+    this.sprite
+      .setOrigin(0.5, 0.7)
+      .setInteractive();
+
+    this.speed = 100;
+    this.weapon = new Weapon(scene, this.sprite.x, this.sprite.y, 'sword')
+
+    // Create movement keys
+    this.cursorKeys = scene.input.keyboard.createCursorKeys();
+    this.spacebar = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);    
   }
 
-  update(keys) {
-    this.movePlayerManager(keys);
+  update() {
+    this.movePlayerManager();
+    this.weapon.update(this.sprite, this.spacebar);
   }
 
   // Move player according to cursor keys
-  movePlayerManager(keys) {
+  movePlayerManager() {
+    const { cursorKeys, sprite, speed } = this;
 
     // Move left and right
-    if (keys.left.isDown) {
-      if (!this.flipX) { this.toggleFlipX(); }
-      this.play('knight_run', true);
-      this.setVelocityX(-this.speed);
-    } else if (keys.right.isDown) {
-      if (this.flipX) { this.toggleFlipX(); }
-      this.play('knight_run', true);
-      this.setVelocityX(this.speed);
+    if (cursorKeys.left.isDown) {
+      sprite.setFlipX(true);
+      sprite.setVelocityX(-speed);
+    } else if (cursorKeys.right.isDown) {
+      sprite.setFlipX(false);
+      sprite.setVelocityX(speed);
     } else {
-      this.setVelocityX(0);
+      sprite.setVelocityX(0);
     }
 
     // Move up and down
-    if (keys.up.isDown) {
-      this.play('knight_run', true);
-      this.setVelocityY(-this.speed);
-    } else if (keys.down.isDown) {
-      this.play('knight_run', true);
-      this.setVelocityY(this.speed);
+    if (cursorKeys.up.isDown) {
+      sprite.setVelocityY(-speed);
+    } else if (cursorKeys.down.isDown) {
+      sprite.setVelocityY(speed);
     } else {
-      this.setVelocityY(0);
+      sprite.setVelocityY(0);
     }
 
     // If not moving play idle animation
-    if (!keys.left.isDown && !keys.right.isDown && !keys.up.isDown && !keys.down.isDown) {
-      this.play('knight_idle', true);
+    if (sprite.body.velocity.x !== 0 || sprite.body.velocity.y !== 0) {
+      sprite.play('knight_run', true);
+    } else {
+      sprite.play('knight_idle', true);
     }
   }
 }

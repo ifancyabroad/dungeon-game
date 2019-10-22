@@ -1,15 +1,18 @@
-export class Weapon extends Phaser.GameObjects.Sprite {
+export class Weapon {
 
   // Take the scene, position and sprite as arguments for creation
-  constructor(world, x, y, sprite) {
-    super(world, x, y, sprite);
+  constructor(scene, x, y, sprite) {
+    this.scene = scene;
 
-    // Add to the scene and enable physics
-    world.add.existing(this);
-    world.physics.world.enableBody(this);
-
+    // Create the physics based sprite to move and animate
     // Double the size
-    this.setScale(2);
+    // Stop any rotation
+    this.sprite = scene.physics.add
+      .sprite(x, y, sprite)
+      .setOrigin(0.5, 1)
+      // .setCollisionCategory(0)
+      .setScale(2)
+      .setDepth(4)
 
     this.owned = true;
   }
@@ -17,30 +20,25 @@ export class Weapon extends Phaser.GameObjects.Sprite {
   update(player, attackKey) {
     if (this.owned) {
       this.followPlayer(player);
-      this.attack(attackKey)
+      this.attack(player, attackKey)
     }
   }
 
   // Move weapon with the player
   followPlayer(player) {
-    this.x = player.flipX ? player.x - 8 : player.x + 8;
-    this.y = player.y;
+    this.sprite.x = player.flipX ? player.x - 8 : player.x + 8;
+    this.sprite.y = player.y + 4;
   }
 
-  attack(control) {
+  attack(player, control) {
     if (Phaser.Input.Keyboard.JustDown(control)) {
-      // this.setAngle(90);
-    //   const tween = this.tweens.add({
-    //     targets: this.player,
-    //     y: this.game.config.height - 64,
-    //     ease: 'Power1',
-    //     duration: 1500,
-    //     repeat: 0,
-    //     onComplete: function() {
-    //       this.player.alpha = 1;
-    //     },
-    //     callbackScope: this
-    //   })
+      const angle = player.flipX ? -90 : 90;
+      const tween = this.scene.add.tween({
+        targets: this.sprite,
+        angle: angle,
+        duration: 100,
+        yoyo: true
+      });
     }
   }
 }

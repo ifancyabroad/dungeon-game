@@ -1,15 +1,15 @@
-import { Physics } from "phaser";
-
-export class Entity extends Phaser.Physics.Matter.Sprite {
+export class Entity {
 
   // Take the scene, position and sprite as arguments for creation
   constructor(scene, x, y, sprite) {
-    super(scene.matter.world, x, y, sprite);
-    scene.matter.add.scene.add.existing(this);
+    this.scene = scene
 
-    // Double the size and stop rotation
-    this.setScale(2);
-    this.setFixedRotation();
+    // Create the physics based sprite to move and animate
+    // Double the size
+    this.sprite = scene.physics.add
+      .sprite(x, y, sprite)
+      .setScale(2)
+      .setDepth(5);
   }
 
 
