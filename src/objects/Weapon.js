@@ -14,13 +14,18 @@ export class Weapon {
       .setScale(2)
       .setDepth(4)
 
+    // Set collision detection with the world
+    // scene.physics.world.addCollider(this.sprite, scene.worldLayer);
+
+    // Custom variables
     this.owned = true;
+    this.inUse = false;
   }
 
   update(player, attackKey) {
     if (this.owned) {
       this.followPlayer(player);
-      this.attack(player, attackKey)
+      this.attack(player, attackKey);
     }
   }
 
@@ -30,14 +35,20 @@ export class Weapon {
     this.sprite.y = player.y + 4;
   }
 
+  // Play attack animation
   attack(player, control) {
-    if (Phaser.Input.Keyboard.JustDown(control)) {
+    if (Phaser.Input.Keyboard.JustDown(control) && !this.inUse) {
+      this.inUse = true;
       const angle = player.flipX ? -90 : 90;
       const tween = this.scene.add.tween({
         targets: this.sprite,
         angle: angle,
         duration: 100,
-        yoyo: true
+        yoyo: true,
+        onComplete() {
+          this.inUse = false;
+        },
+        callbackScope: this
       });
     }
   }

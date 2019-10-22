@@ -12,6 +12,7 @@ export class Hero extends Entity {
       .setOrigin(0.5, 0.7)
       .setInteractive();
 
+    // Custom variables
     this.speed = 100;
     this.weapon = new Weapon(scene, this.sprite.x, this.sprite.y, 'sword')
 

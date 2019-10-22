@@ -35,6 +35,5 @@ export class Game extends Phaser.Scene {
 
     // Run the update methods
     this.player.update(this.cursorKeys);
-    // this.weapon.update(this.player, this.spacebar);
   }
 }
