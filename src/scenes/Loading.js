@@ -7,6 +7,8 @@ import roomsData from '../assets/rooms/basic.json';
 import mKnightSprite from '../assets/texture-atlas/frames/knight_m_idle_anim_f0.png';
 import regularSword from '../assets/texture-atlas/frames/weapon_regular_sword.png';
 
+import skeletonSprite from '../assets/texture-atlas/frames/skelet_idle_anim_f0.png';
+
 export class Loading extends Phaser.Scene {
 
   constructor() {
@@ -17,6 +19,8 @@ export class Loading extends Phaser.Scene {
     this.load.atlas('dungeon-sprites', textureAtlas, textureAtlasData);
     this.load.image('player', mKnightSprite);
     this.load.image('sword', regularSword);
+
+    this.load.image('skeleton', skeletonSprite);
 
     this.load.image('tiles', rooms);
     this.load.tilemapTiledJSON('room', roomsData);
@@ -40,6 +44,17 @@ export class Loading extends Phaser.Scene {
         start: 0,
         end: 3,
         prefix: 'frames/knight_m_idle_anim_f', suffix: '.png'
+      }),
+      frameRate: 10,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: 'skeleton_idle',
+      frames: this.anims.generateFrameNames('dungeon-sprites', {
+        start: 0,
+        end: 3,
+        prefix: 'frames/skeleton_idle_anim_f', suffix: '.png'
       }),
       frameRate: 10,
       repeat: -1

@@ -4,15 +4,14 @@ export class Weapon {
   constructor(scene, x, y, sprite) {
     this.scene = scene;
 
-    // Create the physics based sprite to move and animate
+    // Create the sprite to move and animate
     // Double the size
-    // Stop any rotation
-    this.sprite = scene.physics.add
+    this.sprite = scene.add
       .sprite(x, y, sprite)
       .setOrigin(0.5, 1)
       // .setCollisionCategory(0)
       .setScale(2)
-      .setDepth(4)
+      .setDepth(4);
 
     // Set collision detection with the world
     // scene.physics.world.addCollider(this.sprite, scene.worldLayer);
@@ -20,18 +19,26 @@ export class Weapon {
     // Custom variables
     this.owned = true;
     this.inUse = false;
+    this.hitBox = this.scene.add.rectangle(this.sprite.x, this.sprite.y, 42, 42);
   }
 
   update(player, attackKey) {
     if (this.owned) {
-      this.followPlayer(player);
+      this.hitBoxTracker(player);
+      this.playerTracker(player);
       this.attack(player, attackKey);
     }
   }
 
+  // Hitbox to follow the weapon sprite
+  hitBoxTracker(player) {
+    this.hitBox.x = player.flipX ? this.sprite.x - this.hitBox.width / 2 : this.sprite.x + this.hitBox.width / 2;
+    this.hitBox.y = this.sprite.y - this.hitBox.height / 2;
+  }
+
   // Move weapon with the player
-  followPlayer(player) {
-    this.sprite.x = player.flipX ? player.x - 8 : player.x + 8;
+  playerTracker(player) {
+    this.sprite.x = player.flipX ? player.x - this.sprite.width : player.x + this.sprite.width;
     this.sprite.y = player.y + 4;
   }
 
@@ -39,6 +46,7 @@ export class Weapon {
   attack(player, control) {
     if (Phaser.Input.Keyboard.JustDown(control) && !this.inUse) {
       this.inUse = true;
+      this.scene.physics.world.enable(this.hitBox);
       const angle = player.flipX ? -90 : 90;
       const tween = this.scene.add.tween({
         targets: this.sprite,
@@ -47,6 +55,7 @@ export class Weapon {
         yoyo: true,
         onComplete() {
           this.inUse = false;
+          this.scene.physics.world.disable(this.hitBox);
         },
         callbackScope: this
       });

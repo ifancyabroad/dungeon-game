@@ -14,7 +14,7 @@ export class Hero extends Entity {
 
     // Custom variables
     this.speed = 100;
-    this.weapon = new Weapon(scene, this.sprite.x, this.sprite.y, 'sword')
+    this.weapon = new Weapon(scene, this.sprite.x, this.sprite.y, 'sword');
 
     // Create movement keys
     this.cursorKeys = scene.input.keyboard.createCursorKeys();
