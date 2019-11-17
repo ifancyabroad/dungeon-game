@@ -1,15 +1,15 @@
-export class Weapon {
+import { Physics } from "phaser";
+
+export class Weapon extends Physics.Arcade.Sprite {
 
   // Take the scene, position and sprite as arguments for creation
   constructor(scene, x, y, sprite) {
-    this.scene = scene;
+    super(scene, x, y, sprite)
 
     // Create the sprite to move and animate
     // Double the size
-    this.sprite = scene.add
-      .sprite(x, y, sprite)
+    scene.physics.add.existing(this)
       .setOrigin(0.5, 1)
-      // .setCollisionCategory(0)
       .setScale(2)
       .setDepth(4);
 
@@ -19,7 +19,7 @@ export class Weapon {
     // Custom variables
     this.owned = true;
     this.inUse = false;
-    this.hitBox = this.scene.add.rectangle(this.sprite.x, this.sprite.y, 42, 42);
+    this.hitBox = this.scene.add.rectangle(this.x, this.y, 42, 42);
   }
 
   update(player, attackKey) {
@@ -32,14 +32,14 @@ export class Weapon {
 
   // Hitbox to follow the weapon sprite
   hitBoxTracker(player) {
-    this.hitBox.x = player.flipX ? this.sprite.x - this.hitBox.width / 2 : this.sprite.x + this.hitBox.width / 2;
-    this.hitBox.y = this.sprite.y - this.hitBox.height / 2;
+    this.hitBox.x = player.flipX ? this.x - this.hitBox.width / 2 : this.x + this.hitBox.width / 2;
+    this.hitBox.y = this.y - this.hitBox.height / 2;
   }
 
   // Move weapon with the player
   playerTracker(player) {
-    this.sprite.x = player.flipX ? player.x - this.sprite.width : player.x + this.sprite.width;
-    this.sprite.y = player.y + 4;
+    this.x = player.flipX ? player.x - this.width : player.x + this.width;
+    this.y = player.y + 4;
   }
 
   // Play attack animation
@@ -49,7 +49,7 @@ export class Weapon {
       this.scene.physics.world.enable(this.hitBox);
       const angle = player.flipX ? -90 : 90;
       const tween = this.scene.add.tween({
-        targets: this.sprite,
+        targets: this,
         angle: angle,
         duration: 100,
         yoyo: true,
