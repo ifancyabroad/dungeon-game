@@ -50,6 +50,17 @@ export class Loading extends Phaser.Scene {
     });
 
     this.anims.create({
+      key: 'skelet_run',
+      frames: this.anims.generateFrameNames('dungeon-sprites', {
+        start: 0,
+        end: 3,
+        prefix: 'frames/skelet_run_anim_f', suffix: '.png'
+      }),
+      frameRate: 10,
+      repeat: -1
+    });
+
+    this.anims.create({
       key: 'skeleton_idle',
       frames: this.anims.generateFrameNames('dungeon-sprites', {
         start: 0,

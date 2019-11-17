@@ -8,13 +8,13 @@ export class Hero extends Entity {
     super(scene, x, y, sprite);
 
     // Set player speed and allow interaction    
-    this.sprite
+    this
       .setOrigin(0.5, 0.7)
       .setInteractive();
 
     // Custom variables
     this.speed = 100;
-    this.weapon = new Weapon(scene, this.sprite.x, this.sprite.y, 'sword');
+    this.weapon = new Weapon(scene, this.x, this.y, 'sword');
 
     // Create movement keys
     this.cursorKeys = scene.input.keyboard.createCursorKeys();
@@ -23,38 +23,37 @@ export class Hero extends Entity {
 
   update() {
     this.movePlayerManager();
-    this.weapon.update(this.sprite, this.spacebar);
+    this.weapon.update(this, this.spacebar);
   }
 
   // Move player according to cursor keys
   movePlayerManager() {
-    const { cursorKeys, sprite, speed } = this;
 
     // Move left and right
-    if (cursorKeys.left.isDown) {
-      sprite.setFlipX(true);
-      sprite.setVelocityX(-speed);
-    } else if (cursorKeys.right.isDown) {
-      sprite.setFlipX(false);
-      sprite.setVelocityX(speed);
+    if (this.cursorKeys.left.isDown) {
+      this.setFlipX(true);
+      this.setVelocityX(-this.speed);
+    } else if (this.cursorKeys.right.isDown) {
+      this.setFlipX(false);
+      this.setVelocityX(this.speed);
     } else {
-      sprite.setVelocityX(0);
+      this.setVelocityX(0);
     }
 
     // Move up and down
-    if (cursorKeys.up.isDown) {
-      sprite.setVelocityY(-speed);
-    } else if (cursorKeys.down.isDown) {
-      sprite.setVelocityY(speed);
+    if (this.cursorKeys.up.isDown) {
+      this.setVelocityY(-this.speed);
+    } else if (this.cursorKeys.down.isDown) {
+      this.setVelocityY(this.speed);
     } else {
-      sprite.setVelocityY(0);
+      this.setVelocityY(0);
     }
 
     // If not moving play idle animation
-    if (sprite.body.velocity.x !== 0 || sprite.body.velocity.y !== 0) {
-      sprite.play('knight_run', true);
+    if (this.body.velocity.x !== 0 || this.body.velocity.y !== 0) {
+      this.play('knight_run', true);
     } else {
-      sprite.play('knight_idle', true);
+      this.play('knight_idle', true);
     }
   }
 }

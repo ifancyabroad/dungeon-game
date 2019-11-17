@@ -1,13 +1,14 @@
-export class Weapon {
+export class Weapon extends Phaser.GameObjects.Sprite {
 
   // Take the scene, position and sprite as arguments for creation
   constructor(scene, x, y, sprite) {
+    super(scene, x, y, sprite);
+
     this.scene = scene;
 
     // Create the sprite to move and animate
-    // Double the size
-    this.sprite = scene.add
-      .sprite(x, y, sprite)
+    this.scene.add
+      .existing(this)
       .setOrigin(0.5, 1)
       .setScale(2)
       .setDepth(4);
@@ -18,7 +19,9 @@ export class Weapon {
     // Custom variables
     this.owned = true;
     this.inUse = false;
-    this.hitBox = this.scene.add.rectangle(this.sprite.x, this.sprite.y, 42, 42);
+
+    // Hitbox
+    this.hitBox = this.scene.add.rectangle(this.x, this.y, 42, 42);
     this.scene.physics.world.enable(this.hitBox);
   }
 
@@ -33,12 +36,12 @@ export class Weapon {
   tracker(player) {
 
     // Hitbox tracker
-    this.hitBox.x = player.flipX ? this.sprite.x - this.hitBox.width / 2 : this.sprite.x + this.hitBox.width / 2;
-    this.hitBox.y = this.sprite.y - this.hitBox.height / 2;
+    this.hitBox.x = player.flipX ? this.x - this.hitBox.width / 2 : this.x + this.hitBox.width / 2;
+    this.hitBox.y = this.y - this.hitBox.height / 2;
 
     // Weapon sprite tracker
-    this.sprite.x = player.flipX ? player.x - this.sprite.width : player.x + this.sprite.width;
-    this.sprite.y = player.y + 4;
+    this.x = player.flipX ? player.x - this.width : player.x + this.width;
+    this.y = player.y + 4;
   }
 
   // Play attack animation
@@ -54,11 +57,11 @@ export class Weapon {
       // this.hitBox.setPosition(x, y);
 
       // Check if hit
-      this.scene.physics.overlap(this.hitBox, this.scene.enemySprites, this.hit, null, this);
+      this.scene.physics.overlap(this.hitBox, this.scene.enemies, this.hit, null, this);
 
       // Start animation
       this.scene.add.tween({
-        targets: this.sprite,
+        targets: this,
         angle: player.flipX ? -90 : 90,
         duration: 100,
         yoyo: true,
