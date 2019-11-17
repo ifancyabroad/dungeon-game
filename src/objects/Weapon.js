@@ -9,7 +9,6 @@ export class Weapon {
     this.sprite = scene.add
       .sprite(x, y, sprite)
       .setOrigin(0.5, 1)
-      // .setCollisionCategory(0)
       .setScale(2)
       .setDepth(4);
 
@@ -47,6 +46,7 @@ export class Weapon {
     if (Phaser.Input.Keyboard.JustDown(control) && !this.inUse) {
       this.inUse = true;
       this.scene.physics.world.enable(this.hitBox);
+      this.scene.physics.overlap(this.hitBox, this.scene.enemySprites, this.hit, null, this)
       const angle = player.flipX ? -90 : 90;
       const tween = this.scene.add.tween({
         targets: this.sprite,
@@ -60,5 +60,9 @@ export class Weapon {
         callbackScope: this
       });
     }
+  }
+
+  hit() {
+    console.log('A hit!');
   }
 }

@@ -54,7 +54,7 @@ export class Loading extends Phaser.Scene {
       frames: this.anims.generateFrameNames('dungeon-sprites', {
         start: 0,
         end: 3,
-        prefix: 'frames/skeleton_idle_anim_f', suffix: '.png'
+        prefix: 'frames/skelet_idle_anim_f', suffix: '.png'
       }),
       frameRate: 10,
       repeat: -1
