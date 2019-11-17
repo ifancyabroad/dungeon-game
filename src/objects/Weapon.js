@@ -19,24 +19,24 @@ export class Weapon {
     this.owned = true;
     this.inUse = false;
     this.hitBox = this.scene.add.rectangle(this.sprite.x, this.sprite.y, 42, 42);
+    this.scene.physics.world.enable(this.hitBox);
   }
 
   update(player, attackKey) {
     if (this.owned) {
-      this.hitBoxTracker(player);
-      this.playerTracker(player);
+      this.tracker(player);
       this.attack(player, attackKey);
     }
   }
 
-  // Hitbox to follow the weapon sprite
-  hitBoxTracker(player) {
+  // Move weapon with the player
+  tracker(player) {
+
+    // Hitbox tracker
     this.hitBox.x = player.flipX ? this.sprite.x - this.hitBox.width / 2 : this.sprite.x + this.hitBox.width / 2;
     this.hitBox.y = this.sprite.y - this.hitBox.height / 2;
-  }
 
-  // Move weapon with the player
-  playerTracker(player) {
+    // Weapon sprite tracker
     this.sprite.x = player.flipX ? player.x - this.sprite.width : player.x + this.sprite.width;
     this.sprite.y = player.y + 4;
   }
@@ -44,25 +44,38 @@ export class Weapon {
   // Play attack animation
   attack(player, control) {
     if (Phaser.Input.Keyboard.JustDown(control) && !this.inUse) {
+
+      // Set in use to stop multiple attacks at once
       this.inUse = true;
-      this.scene.physics.world.enable(this.hitBox);
-      this.scene.physics.overlap(this.hitBox, this.scene.enemySprites, this.hit, null, this)
-      const angle = player.flipX ? -90 : 90;
-      const tween = this.scene.add.tween({
+
+      // Set location of the hitbox
+      // const x = player.flipX ? this.sprite.x - this.hitBox.width / 2 : this.sprite.x + this.hitBox.width / 2;
+      // const y = this.sprite.y - this.hitBox.height / 2;  
+      // this.hitBox.setPosition(x, y);
+
+      // Check if hit
+      this.scene.physics.overlap(this.hitBox, this.scene.enemySprites, this.hit, null, this);
+
+      // Start animation
+      this.scene.add.tween({
         targets: this.sprite,
-        angle: angle,
+        angle: player.flipX ? -90 : 90,
         duration: 100,
         yoyo: true,
         onComplete() {
           this.inUse = false;
-          this.scene.physics.world.disable(this.hitBox);
         },
         callbackScope: this
       });
     }
   }
 
-  hit() {
-    console.log('A hit!');
+  // Register a hit on the enemy!
+  hit(player, enemy) {
+    console.log('A hit!', enemy);
+    enemy.setTintFill();
+    this.scene.time.delayedCall(200, () => {
+      enemy.clearTint();
+    }, null, this);
   }
 }
