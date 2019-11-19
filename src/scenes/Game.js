@@ -1,5 +1,6 @@
-import { Hero } from "../objects/Hero";
+import { Player } from "../objects/Player";
 import { Enemy } from "../objects/Enemy";
+import { Weapon } from "../objects/Weapon";
 
 export class Game extends Phaser.Scene {
 
@@ -19,13 +20,17 @@ export class Game extends Phaser.Scene {
       .setScale(2)
       .setDepth(10);
 
-    // Create player and enemies
-    this.player = new Hero(this, this.game.config.width / 2 - 16, this.game.config.height / 2 - 16, 'player');
-    this.enemies = this.physics.add.group();
+    // Create player and weapon
+    const hero = this.add.sprite(0, 0, 'knight');
+    const weapon = new Weapon(this, 0, 0, 'sword');
+    this.player = new Player(this, this.game.config.width / 2 - 16, this.game.config.height / 2 - 16, [hero, weapon])
 
+    // Create enemies
     const spawnPoint = room.findObject('Enemies', obj => obj.name === 'Spawn Point');
-    const skeleton = new Enemy(this, spawnPoint.x * 2, spawnPoint.y * 2, 'skeleton');
-    this.enemies.add(skeleton);
+    const skeleton = this.add.sprite(0, 0, 'skeleton');
+    const enemy = new Enemy(this, spawnPoint.x * 2, spawnPoint.y * 2, [skeleton]);
+    this.enemies = this.physics.add.group();
+    this.enemies.add(enemy);
 
     // Add collision detection
     this.worldLayer.setCollisionByProperty({ collides: true });
@@ -40,9 +45,8 @@ export class Game extends Phaser.Scene {
   }
 
   update() {
-
     // Run the update methods
-    this.player.update(this.cursorKeys);
+    this.player.update();
     this.enemies.getChildren().forEach(enemy => enemy.update());
   }
 }

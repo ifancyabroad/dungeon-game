@@ -17,7 +17,7 @@ export class Loading extends Phaser.Scene {
 
   preload() {
     this.load.atlas('dungeon-sprites', textureAtlas, textureAtlasData);
-    this.load.image('player', mKnightSprite);
+    this.load.image('knight', mKnightSprite);
     this.load.image('sword', regularSword);
 
     this.load.image('skeleton', skeletonSprite);

@@ -3,8 +3,8 @@ import { Entity } from "./Entity";
 export class Enemy extends Entity {
 
   // Take the scene, position and sprite as arguments for creation
-  constructor(scene, x, y, sprite) {
-    super(scene, x, y, sprite);
+  constructor(scene, x, y, children) {
+    super(scene, x, y, children);
 
     // Custom variables
     this.speed = 100;
@@ -19,9 +19,9 @@ export class Enemy extends Entity {
 
     // If not moving play idle animation
     if (this.body.velocity.x !== 0 || this.body.velocity.y !== 0) {
-      this.play('skelet_run', true);
+      this.sprite.play('skelet_run', true);
     } else {
-      this.play('skeleton_idle', true);
+      this.sprite.play('skeleton_idle', true);
     }
   }
 }

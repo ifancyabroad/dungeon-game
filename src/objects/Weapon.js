@@ -9,9 +9,7 @@ export class Weapon extends Phaser.GameObjects.Sprite {
     // Create the sprite to move and animate
     this.scene.add
       .existing(this)
-      .setOrigin(0.5, 1)
-      .setScale(2)
-      .setDepth(4);
+      .setOrigin(0.5, 1);
 
     // Set collision detection with the world
     // scene.physics.world.addCollider(this.sprite, scene.worldLayer);
@@ -34,14 +32,9 @@ export class Weapon extends Phaser.GameObjects.Sprite {
 
   // Move weapon with the player
   tracker(player) {
-
     // Hitbox tracker
     this.hitBox.x = player.flipX ? this.x - this.hitBox.width / 2 : this.x + this.hitBox.width / 2;
     this.hitBox.y = this.y - this.hitBox.height / 2;
-
-    // Weapon sprite tracker
-    this.x = player.flipX ? player.x - this.width : player.x + this.width;
-    this.y = player.y + 4;
   }
 
   // Play attack animation
