@@ -5,8 +5,11 @@ import { Game } from "./scenes/Game";
 
 const config = {
   type: Phaser.AUTO,
-  width: 800,
-  height: 576,
+  scale: {
+    mode: Phaser.Scale.FIT,
+    width: 400,
+    height: 288
+  },
   backgroundColor: 0x000000,
   scene: [Loading, Game],
   pixelArt: true,

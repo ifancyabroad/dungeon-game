@@ -13,22 +13,18 @@ export class Game extends Phaser.Scene {
     const tileset = room.addTilesetImage('0x72_DungeonTilesetII_v1.3', 'tiles');
 
     // Create world layers
-    this.belowLayer = room.createStaticLayer('Below Player', tileset, 0, 0)
-      .setScale(2)
-      .setDepth(1);
-    this.worldLayer = room.createStaticLayer('World', tileset, 0, 0)
-      .setScale(2)
-      .setDepth(10);
+    this.belowLayer = room.createStaticLayer('Below Player', tileset, 0, 0).setDepth(1);
+    this.worldLayer = room.createStaticLayer('World', tileset, 0, 0).setDepth(10);
 
     // Create player and weapon
     const hero = this.add.sprite(0, 0, 'knight');
     const weapon = new Weapon(this, 0, 0, 'sword');
-    this.player = new Player(this, this.game.config.width / 2 - 16, this.game.config.height / 2 - 16, [hero, weapon])
+    this.player = new Player(this, (this.game.config.width / 2) - 16, (this.game.config.height / 2) - 16, [hero, weapon])
 
     // Create enemies
     const spawnPoint = room.findObject('Enemies', obj => obj.name === 'Spawn Point');
     const skeleton = this.add.sprite(0, 0, 'skeleton');
-    const enemy = new Enemy(this, spawnPoint.x * 2, spawnPoint.y * 2, [skeleton]);
+    const enemy = new Enemy(this, spawnPoint.x, spawnPoint.y, [skeleton]);
     this.enemies = this.physics.add.group();
     this.enemies.add(enemy);
 

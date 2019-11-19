@@ -9,11 +9,12 @@ export class Entity extends Phaser.GameObjects.Container {
     // Set the character sprite
     this.sprite = children[0];
 
-    // Add container to the scene and set scale and depth
+    // Add container to the scene and set size and depth
     this.scene.add
       .existing(this)
-      .setScale(2)
-      .setDepth(5);
+      .setSize(this.sprite.width, this.sprite.height)
+      .setDepth(5)
+      .setInteractive();
   
     // Add physics to the container
     this.scene.physics.world.enable(this);

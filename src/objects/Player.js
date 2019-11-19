@@ -6,11 +6,6 @@ export class Player extends Entity {
   constructor(scene, x, y, children) {
     super(scene, x, y, children);
 
-    // Set player speed and allow interaction    
-    this.sprite
-      .setOrigin(0.5, 0.7)
-      .setInteractive();
-
     // Custom variables
     this.speed = 100;
 
