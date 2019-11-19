@@ -17,10 +17,6 @@ export class Weapon extends Phaser.GameObjects.Sprite {
     // Custom variables
     this.owned = true;
     this.inUse = false;
-
-    // Hitbox
-    this.hitBox = this.scene.add.rectangle(this.x, this.y, 42, 42);
-    this.scene.physics.world.enable(this.hitBox);
   }
 
   update(player, attackKey) {
@@ -33,8 +29,8 @@ export class Weapon extends Phaser.GameObjects.Sprite {
   // Move weapon with the player
   tracker(player) {
     // Hitbox tracker
-    this.hitBox.x = player.flipX ? this.x - this.hitBox.width / 2 : this.x + this.hitBox.width / 2;
-    this.hitBox.y = this.y - this.hitBox.height / 2;
+    // this.hitBox.x = player.flipX ? this.x - this.hitBox.width / 2 : this.x + this.hitBox.width / 2;
+    // this.hitBox.y = this.y - this.hitBox.height / 2;
   }
 
   // Play attack animation
@@ -45,9 +41,12 @@ export class Weapon extends Phaser.GameObjects.Sprite {
       this.inUse = true;
 
       // Set location of the hitbox
-      // const x = player.flipX ? this.sprite.x - this.hitBox.width / 2 : this.sprite.x + this.hitBox.width / 2;
-      // const y = this.sprite.y - this.hitBox.height / 2;  
-      // this.hitBox.setPosition(x, y);
+      // Hitbox
+      this.hitBox = this.scene.add.rectangle(this.x, this.y, 42, 42);
+      this.scene.physics.world.enable(this.hitBox);
+      const x = player.flipX ? this.x - this.hitBox.width / 2 : this.x + this.hitBox.width / 2;
+      const y = this.y - this.hitBox.height / 2;  
+      this.hitBox.setPosition(x, y);
 
       // Check if hit
       this.scene.physics.overlap(this.hitBox, this.scene.enemies, this.hit, null, this);

@@ -18,7 +18,7 @@ export class Game extends Phaser.Scene {
 
     // Create player and weapon
     const hero = this.add.sprite(0, 0, 'knight');
-    const weapon = new Weapon(this, 0, 0, 'sword');
+    const weapon = new Weapon(this, 4, 4, 'sword');
     this.player = new Player(this, (this.game.config.width / 2) - 16, (this.game.config.height / 2) - 16, [hero, weapon])
 
     // Create enemies
