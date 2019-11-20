@@ -29,11 +29,9 @@ export class Player extends Entity {
     // Move left and right
     if (this.cursorKeys.left.isDown) {
       this.sprite.setFlipX(true);
-      this.weapon.setX(-4);
       this.body.setVelocityX(-this.speed);
     } else if (this.cursorKeys.right.isDown) {
       this.sprite.setFlipX(false);
-      this.weapon.setX(4);
       this.body.setVelocityX(this.speed);
     } else {
       this.body.setVelocityX(0);

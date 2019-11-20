@@ -9,47 +9,46 @@ export class Weapon extends Phaser.GameObjects.Sprite {
     // Create the sprite to move and animate
     this.scene.add
       .existing(this)
+      .setY(4)
       .setOrigin(0.5, 1);
 
-    // Set collision detection with the world
-    // scene.physics.world.addCollider(this.sprite, scene.worldLayer);
+    // Set hitbox
+    this.scene.physics.world.enable(this);
+    this.body
+      .setSize(16, 16);
 
     // Custom variables
     this.owned = true;
-    this.inUse = false;
+    this.attacking = false;
   }
 
   update(player, attackKey) {
     if (this.owned) {
-      this.tracker(player);
+      this.position(player);
       this.attack(player, attackKey);
     }
   }
 
-  // Move weapon with the player
-  tracker(player) {
-    // Hitbox tracker
-    // this.hitBox.x = player.flipX ? this.x - this.hitBox.width / 2 : this.x + this.hitBox.width / 2;
-    // this.hitBox.y = this.y - this.hitBox.height / 2;
+  // Position the weapon correctly based on player orientation
+  position(player) {
+    if (player.flipX) {
+      this.setX(-4);
+      this.body.setOffset(-16, 5);
+    } else {
+      this.setX(4);
+      this.body.setOffset(8, 5);
+    }
   }
 
   // Play attack animation
   attack(player, control) {
-    if (Phaser.Input.Keyboard.JustDown(control) && !this.inUse) {
+    if (Phaser.Input.Keyboard.JustDown(control) && !this.attacking) {
 
       // Set in use to stop multiple attacks at once
-      this.inUse = true;
+      this.attacking = true;
 
-      // Set location of the hitbox
-      // Hitbox
-      this.hitBox = this.scene.add.rectangle(this.x, this.y, 42, 42);
-      this.scene.physics.world.enable(this.hitBox);
-      const x = player.flipX ? this.x - this.hitBox.width / 2 : this.x + this.hitBox.width / 2;
-      const y = this.y - this.hitBox.height / 2;  
-      this.hitBox.setPosition(x, y);
-
-      // Check if hit
-      this.scene.physics.overlap(this.hitBox, this.scene.enemies, this.hit, null, this);
+      // Set the collision
+      this.scene.physics.overlap(this, this.scene.enemies, this.hit, null, this);
 
       // Start animation
       this.scene.add.tween({
@@ -58,7 +57,7 @@ export class Weapon extends Phaser.GameObjects.Sprite {
         duration: 100,
         yoyo: true,
         onComplete() {
-          this.inUse = false;
+          this.attacking = false;
         },
         callbackScope: this
       });
@@ -67,10 +66,12 @@ export class Weapon extends Phaser.GameObjects.Sprite {
 
   // Register a hit on the enemy!
   hit(player, enemy) {
-    console.log('A hit!', enemy);
-    enemy.setTintFill();
-    this.scene.time.delayedCall(200, () => {
-      enemy.clearTint();
-    }, null, this);
+    if (this.attacking) {
+      console.log('A hit!', enemy);
+      enemy.sprite.setTintFill();
+      this.scene.time.delayedCall(200, () => {
+        enemy.sprite.clearTint();
+      }, null, this);
+    }
   }
 }
