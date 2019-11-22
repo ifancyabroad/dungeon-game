@@ -65,13 +65,7 @@ export class Weapon extends Phaser.GameObjects.Sprite {
   }
 
   // Register a hit on the enemy!
-  hit(player, enemy) {
-    if (this.attacking) {
-      console.log('A hit!', enemy);
-      enemy.sprite.setTintFill();
-      this.scene.time.delayedCall(200, () => {
-        enemy.sprite.clearTint();
-      }, null, this);
-    }
+  hit(weapon, enemy) {
+    enemy.takeHit(weapon.parentContainer);
   }
 }

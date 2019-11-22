@@ -6,16 +6,16 @@ export class Player extends Entity {
   constructor(scene, x, y, children) {
     super(scene, x, y, children);
 
-    // Custom variables
-    this.speed = 100;
-
     // Weapon
     this.weapon = children[1];
     this.sendToBack(this.weapon);
 
     // Create movement keys
     this.cursorKeys = scene.input.keyboard.createCursorKeys();
-    this.spacebar = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);    
+    this.spacebar = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+    // Custom variables
+    this.speed = 100;
   }
 
   update() {

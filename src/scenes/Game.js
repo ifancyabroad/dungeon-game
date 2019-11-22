@@ -20,7 +20,7 @@ export class Game extends Phaser.Scene {
     const spawnPoint = room.findObject('Enemies', obj => obj.name === 'Spawn Point');
     const skeleton = this.add.sprite(0, 0, 'skeleton');
     const enemy = new Enemy(this, spawnPoint.x, spawnPoint.y, [skeleton]);
-    this.enemies = this.physics.add.group();
+    this.enemies = this.add.group();
     this.enemies.add(enemy);
 
     // Create player and weapon

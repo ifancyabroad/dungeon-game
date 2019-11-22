@@ -17,6 +17,7 @@ export class Entity extends Phaser.GameObjects.Container {
       .setInteractive();
   
     // Add physics to the container
-    this.scene.physics.world.enable(this);
+    this.scene.physics.add
+      .existing(this);
   }
 }
