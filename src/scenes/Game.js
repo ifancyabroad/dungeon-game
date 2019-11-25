@@ -32,12 +32,7 @@ export class Game extends Phaser.Scene {
     this.worldLayer.setCollisionByProperty({ collides: true });
     this.physics.world.addCollider(this.player, this.worldLayer);
     this.physics.world.addCollider(this.enemies, this.worldLayer);
-    this.physics.world.addCollider(this.player, this.enemies, this.contact, null, this);
     this.physics.world.createDebugGraphic();
-  }
-
-  contact() {
-    console.log('Player Contact!');
   }
 
   update() {

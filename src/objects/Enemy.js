@@ -12,14 +12,23 @@ export class Enemy extends Entity {
       .setBounce(0.5);
 
     // Custom variables
-    this.speed = 100;
+    this.speed = 50;
+    this.state = 1;
   }
 
   update() {
-    this.moveManager();
+    this.setSprite();
+    this.aiManager();
   }
 
-  moveManager() {
+  setSprite() {
+    // Flip sprite if moving in a direction
+    if (this.body.velocity.x > 0) {
+      this.sprite.setFlipX(false);
+    } else if (this.body.velocity.x < 0) {
+      this.sprite.setFlipX(true);
+    }
+
     // If not moving play idle animation
     if (this.body.velocity.x !== 0 || this.body.velocity.y !== 0) {
       this.sprite.play('skelet_run', true);
@@ -28,7 +37,43 @@ export class Enemy extends Entity {
     }
   }
 
+  aiManager() {
+    // Check for collision and take appropriate action
+    if (this.scene.physics.overlap(this, this.scene.player)) {
+      this.attack();
+    } else {
+      this.findPlayer();
+    }
+  }
+
+  attack() {
+    if (this.state !== 2) {
+      this.state = 2;
+      this.body.stop();
+      this.scene.time.addEvent({
+        delay: 1000,
+        callback: () => {
+          console.log('attacking');
+        },
+        loop: true
+      })
+    }
+  }
+
+  findPlayer() {
+    if (this.state !== 3) {
+      this.state = 1;
+      this.scene.physics.moveToObject(this, this.scene.player, this.speed);
+    }
+  }
+
   takeHit(player) {
+    // Change state
+    this.state = 3;
+    this.scene.time.delayedCall(1000, () => {
+      this.state = 1;
+    }, null, this);
+
     // Flash white
     this.sprite.setTintFill();
     this.scene.time.delayedCall(200, () => {
