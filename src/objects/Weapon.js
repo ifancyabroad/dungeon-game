@@ -24,13 +24,13 @@ export class Weapon extends Phaser.GameObjects.Sprite {
 
   update(player, attackKey) {
     if (this.owned) {
-      this.position(player);
+      this.setSprite(player);
       this.attack(player, attackKey);
     }
   }
 
   // Position the weapon correctly based on player orientation
-  position(player) {
+  setSprite(player) {
     if (player.flipX) {
       this.setX(-4);
       this.body.setOffset(-16, 5);

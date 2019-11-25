@@ -35,8 +35,8 @@ export class Game extends Phaser.Scene {
     this.physics.world.createDebugGraphic();
   }
 
+  // Run the update methods
   update() {
-    // Run the update methods
     this.player.update();
     this.enemies.getChildren().forEach(enemy => enemy.update());
   }

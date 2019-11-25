@@ -53,4 +53,9 @@ export class Player extends Entity {
       this.sprite.play('knight_idle', true);
     }
   }
+
+  // Take a hit from an enemy
+  takeHit() {
+    console.log('Ouch!');
+  }
 }

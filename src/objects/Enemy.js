@@ -13,6 +13,7 @@ export class Enemy extends Entity {
 
     // Custom variables
     this.speed = 50;
+    this.attackSpeed = 1000;
     this.state = 1;
   }
 
@@ -21,7 +22,9 @@ export class Enemy extends Entity {
     this.aiManager();
   }
 
+  // Set sprite direction and animations
   setSprite() {
+
     // Flip sprite if moving in a direction
     if (this.body.velocity.x > 0) {
       this.sprite.setFlipX(false);
@@ -37,37 +40,45 @@ export class Enemy extends Entity {
     }
   }
 
+  // Decide what to do
   aiManager() {
-    // Check for collision and take appropriate action
     if (this.scene.physics.overlap(this, this.scene.player)) {
-      this.attack();
+      this.attack(this.scene.player);
     } else {
-      this.findPlayer();
+      this.findPlayer(this.scene.player);
     }
   }
 
-  attack() {
+  // Simple player tracking
+  findPlayer(player) {
+    if (this.state !== 3) {
+      this.state = 1;
+      this.scene.physics.moveToObject(this, player, this.speed);
+    }
+  }
+
+  // Attacking the player
+  attack(player) {
     if (this.state !== 2) {
       this.state = 2;
       this.body.stop();
-      this.scene.time.addEvent({
-        delay: 1000,
+      const attackEvent = this.scene.time.addEvent({
+        delay: this.attackSpeed,
         callback: () => {
-          console.log('attacking');
+          if (this.state === 2) {
+            player.takeHit();
+          } else {
+            attackEvent.remove();
+          }
         },
         loop: true
       })
     }
   }
 
-  findPlayer() {
-    if (this.state !== 3) {
-      this.state = 1;
-      this.scene.physics.moveToObject(this, this.scene.player, this.speed);
-    }
-  }
-
+  // Take a hit from the player
   takeHit(player) {
+
     // Change state
     this.state = 3;
     this.scene.time.delayedCall(1000, () => {
