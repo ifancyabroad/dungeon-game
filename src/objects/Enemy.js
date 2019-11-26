@@ -12,14 +12,18 @@ export class Enemy extends Entity {
       .setBounce(0.5);
 
     // Custom variables
+    this.setState(0);
+    this.alive = true;
+    this.health = 100;
     this.speed = 50;
-    this.attackSpeed = 1000;
-    this.state = 1;
   }
 
   update() {
     this.setSprite();
-    this.aiManager();
+    if (this.state !== 2) {
+      this.collisionCheck();
+    }
+    this.stateManager();
   }
 
   // Set sprite direction and animations
@@ -40,49 +44,57 @@ export class Enemy extends Entity {
     }
   }
 
-  // Decide what to do
-  aiManager() {
+  // Check if in contact with player
+  collisionCheck() {
     if (this.scene.physics.overlap(this, this.scene.player)) {
-      this.attack(this.scene.player);
+      this.setState(1);
     } else {
-      this.findPlayer(this.scene.player);
+      this.setState(0);
+    }
+  }
+
+  // Decide what to do
+  stateManager() {
+    switch (this.state) {
+      case 0:
+        this.findPlayer(this.scene.player);
+        break;
+
+      case 1:
+        this.hit(this.scene.player);
+        break;
     }
   }
 
   // Simple player tracking
   findPlayer(player) {
-    if (this.state !== 3) {
-      this.state = 1;
-      this.scene.physics.moveToObject(this, player, this.speed);
-    }
+    this.scene.physics.moveToObject(this, player, this.speed);
   }
 
-  // Attacking the player
-  attack(player) {
-    if (this.state !== 2) {
-      this.state = 2;
-      this.body.stop();
-      const attackEvent = this.scene.time.addEvent({
-        delay: this.attackSpeed,
-        callback: () => {
-          if (this.state === 2) {
-            player.takeHit();
-          } else {
-            attackEvent.remove();
-          }
-        },
-        loop: true
-      })
-    }
+  // Hit the player
+  hit(player) {
+    this.body.stop();
+    player.takeHit(this);
+    // const attackEvent = this.scene.time.addEvent({
+    //   delay: this.attackSpeed,
+    //   callback: () => {
+    //     if (this.state === 2) {
+    //       player.takeHit();
+    //     } else {
+    //       attackEvent.remove();
+    //     }
+    //   },
+    //   loop: true
+    // });
   }
 
-  // Take a hit from the player
-  takeHit(player) {
+  // Temporarily stunned after being attacked
+  stunned(player) {
 
     // Change state
-    this.state = 3;
+    this.setState(2);
     this.scene.time.delayedCall(1000, () => {
-      this.state = 1;
+      this.setState(0);
     }, null, this);
 
     // Flash white
@@ -96,5 +108,11 @@ export class Enemy extends Entity {
     const y = this.body.y - player.body.y;
     this.body.velocity.x += x * 5;
     this.body.velocity.y += y * 5;
+  }
+
+  // Take a hit from the player
+  takeHit(player) {
+    this.stunned(player);
+    console.log('Monster: ouch!')
   }
 }

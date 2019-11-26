@@ -15,16 +15,23 @@ export class Player extends Entity {
     this.spacebar = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
     // Custom variables
+    this.setState(0);
+    this.alive = true;
     this.speed = 100;
   }
 
   update() {
-    this.movePlayerManager();
-    this.weapon.update(this.sprite, this.spacebar);
+    this.controlManager();
+    this.weapon.update(this);
   }
 
   // Move player according to cursor keys
-  movePlayerManager() {
+  controlManager() {
+
+    // Attack if spacebar is pressed
+    if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
+      this.weapon.attack(this);
+    }
 
     // Move left and right
     if (this.cursorKeys.left.isDown) {
@@ -54,8 +61,31 @@ export class Player extends Entity {
     }
   }
 
+  // Register a hit on the enemy!
+  hit(weapon, enemy) {
+    enemy.takeHit(this);
+  }
+
+  stunned() {
+
+    // Change state
+    this.setState(2);
+    this.scene.time.delayedCall(1000, () => {
+      this.setState(0);
+    }, null, this);
+
+    // Flash red
+    this.sprite.setTintFill(0xff0000);
+    this.scene.time.delayedCall(200, () => {
+      this.sprite.clearTint();
+    }, null, this);
+  }
+
   // Take a hit from an enemy
-  takeHit() {
-    console.log('Ouch!');
+  takeHit(enemy) {
+    if (this.state !== 2) {
+      this.stunned();
+      console.log('Player: ouch!');
+    }
   }
 }

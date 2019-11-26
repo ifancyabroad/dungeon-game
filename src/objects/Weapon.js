@@ -18,14 +18,12 @@ export class Weapon extends Phaser.GameObjects.Sprite {
       .setSize(16, 16);
 
     // Custom variables
-    this.owned = true;
-    this.attacking = false;
+    this.setState(1);
   }
 
-  update(player, attackKey) {
-    if (this.owned) {
-      this.setSprite(player);
-      this.attack(player, attackKey);
+  update(player) {
+    if (this.state !== 0) {
+      this.setSprite(player.sprite);
     }
   }
 
@@ -41,31 +39,26 @@ export class Weapon extends Phaser.GameObjects.Sprite {
   }
 
   // Play attack animation
-  attack(player, control) {
-    if (Phaser.Input.Keyboard.JustDown(control) && !this.attacking) {
+  attack(player) {
+    if (this.state !== 2) {
 
       // Set in use to stop multiple attacks at once
-      this.attacking = true;
+      this.setState(2);
 
       // Set the collision
-      this.scene.physics.overlap(this, this.scene.enemies, this.hit, null, this);
+      this.scene.physics.overlap(this, this.scene.enemies, player.hit, null, player);
 
       // Start animation
       this.scene.add.tween({
         targets: this,
-        angle: player.flipX ? -90 : 90,
+        angle: player.sprite.flipX ? -90 : 90,
         duration: 100,
         yoyo: true,
         onComplete() {
-          this.attacking = false;
+          this.setState(1);;
         },
         callbackScope: this
       });
     }
-  }
-
-  // Register a hit on the enemy!
-  hit(weapon, enemy) {
-    enemy.takeHit(weapon.parentContainer);
   }
 }
