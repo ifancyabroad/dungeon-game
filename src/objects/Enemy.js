@@ -11,11 +11,28 @@ export class Enemy extends Entity {
       .setDrag(50)
       .setBounce(0.5);
 
+    // Particle emitter for death animation
+    this.emitter = this.scene.particles.createEmitter({
+      frame: ['frames/weapon_regular_sword.png'],
+      angle: { min: 240, max: 300 },
+      speed: { min: 40, max: 60 },
+      quantity: { min: 2, max: 10 },
+      lifespan: 1200,
+      alpha: { start: 1, end: 0 },
+      scale: { min: 0.05, max: 0.4 },
+      rotate: { start: 0, end: 360, ease: 'Back.easeOut' },
+      gravityY: 80,
+      on: false
+    });
+
     // Custom variables
     this.setState(0);
-    this.alive = true;
     this.health = 100;
     this.speed = 50;
+  }
+
+  get isAlive() {
+    return this.health > 0;
   }
 
   update() {
@@ -61,7 +78,7 @@ export class Enemy extends Entity {
         break;
 
       case 1:
-        this.hit(this.scene.player);
+        this.attackPlayer(this.scene.player);
         break;
     }
   }
@@ -71,21 +88,10 @@ export class Enemy extends Entity {
     this.scene.physics.moveToObject(this, player, this.speed);
   }
 
-  // Hit the player
-  hit(player) {
+  // Attack the player
+  attackPlayer(player) {
     this.body.stop();
     player.takeHit(this);
-    // const attackEvent = this.scene.time.addEvent({
-    //   delay: this.attackSpeed,
-    //   callback: () => {
-    //     if (this.state === 2) {
-    //       player.takeHit();
-    //     } else {
-    //       attackEvent.remove();
-    //     }
-    //   },
-    //   loop: true
-    // });
   }
 
   // Temporarily stunned after being attacked
@@ -110,9 +116,17 @@ export class Enemy extends Entity {
     this.body.velocity.y += y * 5;
   }
 
+  death() {
+    this.emitter.emitParticleAt(this.x, this.y);
+    this.destroy();
+  }
+
   // Take a hit from the player
-  takeHit(player) {
+  takeHit(damage, player) {
     this.stunned(player);
-    console.log('Monster: ouch!')
+    this.health -= damage;
+    if (!this.isAlive) {
+      this.death();
+    }
   }
 }

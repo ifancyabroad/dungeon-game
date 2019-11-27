@@ -1,8 +1,8 @@
 export class Weapon extends Phaser.GameObjects.Sprite {
 
   // Take the scene, position and sprite as arguments for creation
-  constructor(scene, x, y, sprite) {
-    super(scene, x, y, sprite);
+  constructor(scene, x, y, sprite, frame) {
+    super(scene, x, y, sprite, frame);
 
     this.scene = scene;
 
@@ -19,6 +19,7 @@ export class Weapon extends Phaser.GameObjects.Sprite {
 
     // Custom variables
     this.setState(1);
+    this.damage = 50;
   }
 
   update(player) {

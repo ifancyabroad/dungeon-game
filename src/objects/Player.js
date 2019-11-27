@@ -63,9 +63,10 @@ export class Player extends Entity {
 
   // Register a hit on the enemy!
   hit(weapon, enemy) {
-    enemy.takeHit(this);
+    enemy.takeHit(weapon.damage, this);
   }
 
+  // Temporary invincibility after being hit
   stunned() {
 
     // Change state
