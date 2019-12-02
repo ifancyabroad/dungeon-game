@@ -17,14 +17,17 @@ export class Game extends Phaser.Scene {
 
     // Create world layers
     this.belowLayer = room.createStaticLayer('Below Player', tileset, 0, 0).setDepth(1);
-    this.worldLayer = room.createStaticLayer('World', tileset, 0, 0).setDepth(10);
+    this.wallsBelowLayer = room.createStaticLayer('Walls Below', tileset, 0, 0).setDepth(2);
+    this.wallsAboveLayer = room.createStaticLayer('Walls Above', tileset, 0, 0).setDepth(10);
 
     // Create enemies
-    const spawnPoint = room.findObject('Enemies', obj => obj.name === 'Spawn Point');
-    const skeleton = this.add.sprite(0, 0, 'dungeon-sprites', 'frames/skelet_idle_anim_f0.png');
-    const enemy = new Enemy(this, spawnPoint.x, spawnPoint.y, [skeleton]);
     this.enemies = this.add.group();
-    this.enemies.add(enemy);
+    const enemyLocations = room.filterObjects('Enemies', (object) => object.name === 'Skeleton');
+    enemyLocations.forEach(location => {
+      const skeleton = this.add.sprite(0, 0, 'dungeon-sprites', 'frames/skelet_idle_anim_f0.png');
+      const enemy = new Enemy(this, location.x, location.y, [skeleton]);
+      this.enemies.add(enemy);
+    })
 
     // Create player and weapon
     const hero = this.add.sprite(0, 0, 'dungeon-sprites', 'frames/knight_m_idle_anim_f0.png');
@@ -32,9 +35,13 @@ export class Game extends Phaser.Scene {
     this.player = new Player(this, (this.game.config.width / 2) - 16, (this.game.config.height / 2) - 16, [hero, weapon])
 
     // Add collision detection
-    this.worldLayer.setCollisionByProperty({ collides: true });
-    this.physics.world.addCollider(this.player, this.worldLayer);
-    this.physics.world.addCollider(this.enemies, this.worldLayer);
+    this.wallsBelowLayer.setCollisionByProperty({ collides: true });
+    this.wallsAboveLayer.setCollisionByProperty({ collides: true });
+    this.physics.world.addCollider(this.player, this.wallsBelowLayer);
+    this.physics.world.addCollider(this.player, this.wallsAboveLayer);
+    this.physics.world.addCollider(this.enemies);
+    this.physics.world.addCollider(this.enemies, this.wallsBelowLayer);
+    this.physics.world.addCollider(this.enemies, this.wallsAboveLayer);
     this.physics.world.createDebugGraphic();
 
     // Fade in
