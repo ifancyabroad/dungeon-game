@@ -4,6 +4,8 @@ import textureAtlasData from '../assets/texture-atlas/0x72_DungeonTilesetII_v1.3
 import rooms from '../assets/rooms/0x72_DungeonTilesetII_v1.3.png';
 import roomsData from '../assets/rooms/basic.json';
 
+import graveyard from "../assets/images/background.png";
+
 export class Loading extends Phaser.Scene {
 
   constructor() {
@@ -14,6 +16,20 @@ export class Loading extends Phaser.Scene {
     this.load.atlas('dungeon-sprites', textureAtlas, textureAtlasData);
     this.load.image('tiles', rooms);
     this.load.tilemapTiledJSON('room', roomsData);
+
+    this.load.image('graveyard', graveyard);
+
+    const loadingBar = this.add.graphics({
+      fillStyle: {
+        color: 0xffffff
+      }
+    });
+
+    this.load.on('progress', (percent) => {
+      loadingBar.fillRect(0, this.game.renderer.height / 2, this.game.renderer.width * percent, 50);
+    })
+
+    this.add.text(20, 20, 'Loading game...');
   }
 
   create() {
@@ -61,7 +77,6 @@ export class Loading extends Phaser.Scene {
       repeat: -1
     });
 
-    this.add.text(20, 20, 'Loading game...');
-    this.scene.start('playGame');
+    this.scene.start('menu');
   }
 }

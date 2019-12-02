@@ -36,6 +36,9 @@ export class Game extends Phaser.Scene {
     this.physics.world.addCollider(this.player, this.worldLayer);
     this.physics.world.addCollider(this.enemies, this.worldLayer);
     this.physics.world.createDebugGraphic();
+
+    // Fade in
+    this.cameras.main.fadeIn(600);
   }
 
   // Run the update methods

@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import { Loading } from "./scenes/Loading";
+import { Menu } from "./scenes/Menu";
 import { Game } from "./scenes/Game";
 // import logoImg from "./assets/logo.png";
 
@@ -12,7 +13,7 @@ const config = {
     height: 288
   },
   backgroundColor: 0x000000,
-  scene: [Loading, Game],
+  scene: [Loading, Menu, Game],
   pixelArt: true,
   physics: {
     default: 'arcade'
