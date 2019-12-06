@@ -13,7 +13,7 @@ export class Enemy extends Entity {
 
     // Particle emitter for death animation
     this.emitter = this.scene.particles.createEmitter({
-      frame: ['frames/weapon_regular_sword.png'],
+      frame: ['frames/skull.png'],
       angle: { min: 240, max: 300 },
       speed: { min: 40, max: 60 },
       quantity: { min: 2, max: 10 },
@@ -25,15 +25,20 @@ export class Enemy extends Entity {
       on: false
     });
 
-    // Custom variables
+    // States
+    /*  0: Find and chase player
+    *   1: Attack player
+    *   2: Stunned state
+    *   3: Death state
+    */  
     this.setState(0);
+
+    // Custom variables
     this.health = 100;
     this.speed = 50;
   }
 
-  get isAlive() {
-    return this.health > 0;
-  }
+  isAlive = () => this.health > 0;
 
   update() {
     this.setSprite();
@@ -41,6 +46,14 @@ export class Enemy extends Entity {
       this.collisionCheck();
     }
     this.stateManager();
+    this.healthCheck();
+  }
+
+  // Check health
+  healthCheck() {
+    if (!this.isAlive()) {
+      this.death();
+    }
   }
 
   // Set sprite direction and animations
@@ -116,7 +129,9 @@ export class Enemy extends Entity {
     this.body.velocity.y += y * 5;
   }
 
+  // Destroy game object and show death explosion
   death() {
+    this.setState(3);
     this.emitter.emitParticleAt(this.x, this.y);
     this.destroy();
   }
@@ -125,8 +140,5 @@ export class Enemy extends Entity {
   takeHit(damage, player) {
     this.stunned(player);
     this.health -= damage;
-    if (!this.isAlive) {
-      this.death();
-    }
   }
 }

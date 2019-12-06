@@ -14,15 +14,32 @@ export class Player extends Entity {
     this.cursorKeys = scene.input.keyboard.createCursorKeys();
     this.spacebar = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-    // Custom variables
+    // States
+    /*  0: Default state 
+    *   1: 
+    *   2: Stunned state
+    *   3: Death state
+    */  
     this.setState(0);
-    this.alive = true;
+
+    // Custom variables
+    this.lives = 6;
     this.speed = 100;
   }
+
+  isAlive = () => this.lives > 0;
 
   update() {
     this.controlManager();
     this.weapon.update(this);
+    this.livesCheck();
+  }
+
+  // Check the players lives
+  livesCheck() {
+    if (!this.isAlive()) {
+      this.death();
+    }
   }
 
   // Move player according to cursor keys
@@ -82,11 +99,18 @@ export class Player extends Entity {
     }, null, this);
   }
 
+  // Destroy game object and change scenes
+  death() {
+    this.setState(3);
+    this.scene.gameOver();
+    this.destroy();
+  }
+
   // Take a hit from an enemy
   takeHit(enemy) {
     if (this.state !== 2) {
       this.stunned();
-      console.log('Player: ouch!');
+      this.lives--;
     }
   }
 }

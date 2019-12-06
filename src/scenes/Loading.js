@@ -56,6 +56,17 @@ export class Loading extends Phaser.Scene {
     });
 
     this.anims.create({
+      key: 'knight_hit',
+      frames: this.anims.generateFrameNames('dungeon-sprites', {
+        start: 0,
+        end: 0,
+        prefix: 'frames/knight_m_hit_anim_f', suffix: '.png'
+      }),
+      frameRate: 1,
+      repeat: -1
+    });
+
+    this.anims.create({
       key: 'skelet_run',
       frames: this.anims.generateFrameNames('dungeon-sprites', {
         start: 0,

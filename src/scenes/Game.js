@@ -53,4 +53,11 @@ export class Game extends Phaser.Scene {
     this.player.update();
     this.enemies.getChildren().forEach(enemy => enemy.update());
   }
+
+  // Game over screen
+  gameOver() {
+    this.scene.setActive(false);
+    this.scene.launch('gameOver');
+    this.scene.bringToTop('gameOver');
+  }
 }

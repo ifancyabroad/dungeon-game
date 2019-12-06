@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import { Loading } from "./scenes/Loading";
 import { Menu } from "./scenes/Menu";
 import { Game } from "./scenes/Game";
+import { GameOver } from "./scenes/GameOver";
 // import logoImg from "./assets/logo.png";
 
 const config = {
@@ -13,7 +14,7 @@ const config = {
     height: 288
   },
   backgroundColor: 0x000000,
-  scene: [Loading, Menu, Game],
+  scene: [Loading, Menu, Game, GameOver],
   pixelArt: true,
   physics: {
     default: 'arcade'
