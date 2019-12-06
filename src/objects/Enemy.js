@@ -38,19 +38,19 @@ export class Enemy extends Entity {
     this.speed = 50;
   }
 
-  isAlive = () => this.health > 0;
-
   update() {
     this.setSprite();
     if (this.state !== 2) {
       this.collisionCheck();
     }
     this.stateManager();
-    this.healthCheck();
+    this.aliveCheck();
   }
 
-  // Check health
-  healthCheck() {
+  isAlive = () => this.health > 0;
+
+  // Check if alive
+  aliveCheck() {
     if (!this.isAlive()) {
       this.death();
     }

@@ -24,21 +24,59 @@ export class Player extends Entity {
 
     // Custom variables
     this.lives = 6;
+    this.maxLives = 6;
     this.speed = 100;
-  }
 
-  isAlive = () => this.lives > 0;
+    // UI setup
+    this.setUI();
+  }
 
   update() {
     this.controlManager();
     this.weapon.update(this);
-    this.livesCheck();
+    this.aliveCheck();
   }
 
-  // Check the players lives
-  livesCheck() {
+  isAlive = () => this.lives > 0;
+
+  // Check if alive
+  aliveCheck() {
     if (!this.isAlive()) {
       this.death();
+    }
+  }
+
+  // Draw the UI to the screen
+  setUI() {
+    this.hearts = [];
+    let x = 10;
+    let y = 10;
+    const maxHearts = this.maxLives / 2;
+    const currentHearts = this.lives / 2;
+    for (let i = 0; i < maxHearts; i++) {
+      if (currentHearts >= i + 1) {
+        this.hearts.push(this.scene.add.image(x, y, 'dungeon-sprites', 'frames/ui_heart_full.png'));
+      } else if (i + 1 - currentHearts === 0.5) {
+        this.hearts.push(this.scene.add.image(x, y, 'dungeon-sprites', 'frames/ui_heart_half.png'));
+      } else {
+        this.hearts.push(this.scene.add.image(x, y, 'dungeon-sprites', 'frames/ui_heart_empty.png'));
+      }
+      x += 16;
+    }
+  }
+
+  // Update player hearts in the UI
+  updateHearts() {
+    const maxHearts = this.maxLives / 2;
+    const currentHearts = this.lives / 2;
+    for (let i = 0; i < maxHearts; i++) {
+      if (currentHearts >= i + 1) {
+        this.hearts[i].setTexture('dungeon-sprites', 'frames/ui_heart_full.png');
+      } else if (i + 1 - currentHearts === 0.5) {
+        this.hearts[i].setTexture('dungeon-sprites', 'frames/ui_heart_half.png');
+      } else {
+        this.hearts[i].setTexture('dungeon-sprites', 'frames/ui_heart_empty.png');
+      }
     }
   }
 
@@ -111,6 +149,7 @@ export class Player extends Entity {
     if (this.state !== 2) {
       this.stunned();
       this.lives--;
+      this.updateHearts();
     }
   }
 }
