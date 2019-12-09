@@ -3,7 +3,7 @@ import { Entity } from "./Entity";
 export class Player extends Entity {
 
   // Take the scene, position and sprite as arguments for creation
-  constructor(scene, x, y, children) {
+  constructor(scene, x, y, children, data) {
     super(scene, x, y, children);
 
     // Weapon
@@ -23,9 +23,11 @@ export class Player extends Entity {
     this.setState(0);
 
     // Custom variables
-    this.lives = 6;
-    this.maxLives = 6;
-    this.speed = 100;
+    this.setData({
+      lives: data.lives,
+      maxLives: data.maxLives,
+      speed: data.speed
+    });
 
     // UI setup
     this.setUI();
@@ -37,7 +39,7 @@ export class Player extends Entity {
     this.aliveCheck();
   }
 
-  isAlive = () => this.lives > 0;
+  isAlive = () => this.getData('lives') > 0;
 
   // Check if alive
   aliveCheck() {
@@ -51,8 +53,8 @@ export class Player extends Entity {
     this.hearts = [];
     let x = 10;
     let y = 10;
-    const maxHearts = this.maxLives / 2;
-    const currentHearts = this.lives / 2;
+    const maxHearts = this.getData('maxLives') / 2;
+    const currentHearts = this.getData('lives') / 2;
     for (let i = 0; i < maxHearts; i++) {
       if (currentHearts >= i + 1) {
         this.hearts.push(this.scene.add.image(x, y, 'dungeon-sprites', 'frames/ui_heart_full.png'));
@@ -67,8 +69,8 @@ export class Player extends Entity {
 
   // Update player hearts in the UI
   updateHearts() {
-    const maxHearts = this.maxLives / 2;
-    const currentHearts = this.lives / 2;
+    const maxHearts = this.getData('maxLives') / 2;
+    const currentHearts = this.getData('lives') / 2;
     for (let i = 0; i < maxHearts; i++) {
       if (currentHearts >= i + 1) {
         this.hearts[i].setTexture('dungeon-sprites', 'frames/ui_heart_full.png');
@@ -91,19 +93,19 @@ export class Player extends Entity {
     // Move left and right
     if (this.cursorKeys.left.isDown) {
       this.sprite.setFlipX(true);
-      this.body.setVelocityX(-this.speed);
+      this.body.setVelocityX(-this.getData('speed'));
     } else if (this.cursorKeys.right.isDown) {
       this.sprite.setFlipX(false);
-      this.body.setVelocityX(this.speed);
+      this.body.setVelocityX(this.getData('speed'));
     } else {
       this.body.setVelocityX(0);
     }
 
     // Move up and down
     if (this.cursorKeys.up.isDown) {
-      this.body.setVelocityY(-this.speed);
+      this.body.setVelocityY(-this.getData('speed'));
     } else if (this.cursorKeys.down.isDown) {
-      this.body.setVelocityY(this.speed);
+      this.body.setVelocityY(this.getData('speed'));
     } else {
       this.body.setVelocityY(0);
     }
@@ -148,7 +150,7 @@ export class Player extends Entity {
   takeHit(enemy) {
     if (this.state !== 2) {
       this.stunned();
-      this.lives--;
+      this.data.values.lives--;
       this.updateHearts();
     }
   }

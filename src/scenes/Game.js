@@ -8,13 +8,16 @@ export class Game extends Phaser.Scene {
     super('playGame');
   }
 
-  create() {
+  create(data) {
+    // Store which room we are on
+    this.level = data.level;
+
     // Particle manager
     this.particles = this.add.particles('dungeon-sprites').setDepth(5);
 
     this.generateRoom();
     this.generateEnemies();
-    this.createPlayer();
+    this.createPlayer(data.player);
     this.setCollision();
 
     // Fade in
@@ -57,10 +60,16 @@ export class Game extends Phaser.Scene {
   }
 
   // Create the player with a weapon
-  createPlayer() {
+  createPlayer(data) {
     const hero = this.add.sprite(0, 0, 'dungeon-sprites', 'frames/knight_m_idle_anim_f0.png');
     const weapon = new Weapon(this, 0, 0, 'dungeon-sprites', 'frames/weapon_regular_sword.png');
-    this.player = new Player(this, (this.game.config.width / 2) - 16, (this.game.config.height / 2) - 16, [hero, weapon])
+    this.player = new Player(
+      this,
+      (this.game.config.width / 2) - 16,
+      (this.game.config.height / 2) - 16,
+      [hero, weapon],
+      data
+    );
   }
 
   // Set collisions
@@ -101,7 +110,8 @@ export class Game extends Phaser.Scene {
 
   // Proceed to the next room
   nextRoom() {
-    this.scene.restart();
+    this.level++;
+    this.scene.restart({ level: this.level, player: this.player.data.getAll() });
   }
 
   // Game over screen
