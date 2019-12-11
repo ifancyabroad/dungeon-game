@@ -15,6 +15,9 @@ export class Game extends Phaser.Scene {
     // Particle manager
     this.particles = this.add.particles('dungeon-sprites').setDepth(5);
 
+    // Get enemy data
+    this.enemyData = this.cache.json.get('enemyData');
+
     this.generateRoom();
     this.generateEnemies();
     this.createPlayer(data.player);
@@ -53,7 +56,7 @@ export class Game extends Phaser.Scene {
     const enemyLocations = this.room.filterObjects('Enemies', (object) => object.name === 'Skeleton');
     enemyLocations.forEach(location => {
       const skeleton = this.add.sprite(0, 0, 'dungeon-sprites', 'frames/skelet_idle_anim_f0.png');
-      const enemy = new Enemy(this, location.x, location.y, [skeleton]);
+      const enemy = new Enemy(this, location.x, location.y, [skeleton], this.enemyData[0]);
       this.enemies.add(enemy);
     });
     this.roomCleared = !this.enemies.getLength();

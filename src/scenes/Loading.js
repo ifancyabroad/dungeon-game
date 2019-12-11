@@ -1,11 +1,3 @@
-import textureAtlas from '../assets/texture-atlas/0x72_DungeonTilesetII_v1.3.png';
-import textureAtlasData from '../assets/texture-atlas/0x72_DungeonTilesetII_v1.3.json';
-
-import rooms from '../assets/rooms/0x72_DungeonTilesetII_v1.3.png';
-import roomsData from '../assets/rooms/basic.json';
-
-import graveyard from "../assets/images/background.png";
-
 export class Loading extends Phaser.Scene {
 
   constructor() {
@@ -13,11 +5,11 @@ export class Loading extends Phaser.Scene {
   }
 
   preload() {
-    this.load.atlas('dungeon-sprites', textureAtlas, textureAtlasData);
-    this.load.image('tiles', rooms);
-    this.load.tilemapTiledJSON('room', roomsData);
-
-    this.load.image('graveyard', graveyard);
+    this.load.atlas('dungeon-sprites', 'assets/texture-atlas/0x72_DungeonTilesetII_v1.3.png', 'assets/texture-atlas/0x72_DungeonTilesetII_v1.3.json');
+    this.load.image('tiles', 'assets/rooms/0x72_DungeonTilesetII_v1.3.png');
+    this.load.tilemapTiledJSON('room', 'assets/rooms/basic.json');
+    this.load.image('graveyard', 'assets/images/background.png');
+    this.load.json('enemyData', 'assets/data/enemies.json');
 
     const loadingBar = this.add.graphics({
       fillStyle: {

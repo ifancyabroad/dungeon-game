@@ -1,0 +1,10 @@
+[
+	{
+		"name": "Skeleton",
+		"sprite": "skelet",
+		"stats": {
+			"health": 100,
+			"speed": 50
+		}
+	}
+]

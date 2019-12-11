@@ -2,6 +2,7 @@ const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   mode: "development",
@@ -19,15 +20,15 @@ module.exports = {
         test: [/\.vert$/, /\.frag$/],
         use: "raw-loader"
       },
-      {
-        test: /\.(gif|png|jpe?g|svg|xml)$/i,
-        use: {
-          loader: "file-loader",
-          options: {
-            name: "[path][name].[ext]"
-          }
-        }
-      }
+      // {
+      //   test: /\.(gif|png|jpe?g|svg|xml)$/i,
+      //   use: {
+      //     loader: "file-loader",
+      //     options: {
+      //       name: "[path][name].[ext]"
+      //     }
+      //   }
+      // }
     ]
   },
   plugins: [
@@ -40,6 +41,9 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: "./index.html"
-    })
+    }),
+    new CopyPlugin([
+      { from: 'src/assets', to: 'assets' }
+    ])
   ]
 };

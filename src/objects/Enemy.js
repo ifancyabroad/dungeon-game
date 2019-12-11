@@ -3,7 +3,7 @@ import { Entity } from "./Entity";
 export class Enemy extends Entity {
 
   // Take the scene, position and sprite as arguments for creation
-  constructor(scene, x, y, children) {
+  constructor(scene, x, y, children, data) {
     super(scene, x, y, children);
 
     // Set physics body properties
@@ -34,8 +34,11 @@ export class Enemy extends Entity {
     this.setState(0);
 
     // Custom variables
-    this.health = 100;
-    this.speed = 50;
+    this.setData({
+      health: data.stats.health,
+      maxHealth: data.stats.health,
+      speed: data.stats.speed
+    });
   }
 
   update() {
@@ -47,7 +50,7 @@ export class Enemy extends Entity {
     this.aliveCheck();
   }
 
-  isAlive = () => this.health > 0;
+  isAlive = () => this.getData('health') > 0;
 
   // Check if alive
   aliveCheck() {
@@ -98,7 +101,7 @@ export class Enemy extends Entity {
 
   // Simple player tracking
   findPlayer(player) {
-    this.scene.physics.moveToObject(this, player, this.speed);
+    this.scene.physics.moveToObject(this, player, this.getData('speed'));
   }
 
   // Attack the player
@@ -139,6 +142,6 @@ export class Enemy extends Entity {
   // Take a hit from the player
   takeHit(damage, player) {
     this.stunned(player);
-    this.health -= damage;
+    this.data.values.health -= damage;
   }
 }
