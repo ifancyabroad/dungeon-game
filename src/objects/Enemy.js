@@ -4,7 +4,7 @@ export class Enemy extends Entity {
 
   // Take the scene, position and sprite as arguments for creation
   constructor(scene, x, y, children, data) {
-    super(scene, x, y, children);
+    super(scene, x, y, children, data);
 
     // Set physics body properties
     this.body
@@ -79,7 +79,7 @@ export class Enemy extends Entity {
 
   // Check if in contact with player
   collisionCheck() {
-    if (this.scene.physics.overlap(this, this.scene.player)) {
+    if (this.scene.physics.collide(this, this.scene.player)) {
       this.setState(1);
     } else {
       this.setState(0);
@@ -101,12 +101,14 @@ export class Enemy extends Entity {
 
   // Simple player tracking
   findPlayer(player) {
+    this.body.moves = true;
     this.scene.physics.moveToObject(this, player, this.getData('speed'));
   }
 
   // Attack the player
   attackPlayer(player) {
-    this.body.stop();
+    this.body.moves = false;
+    // this.body.stop();
     player.takeHit(this);
   }
 

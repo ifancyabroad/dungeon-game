@@ -4,7 +4,11 @@ export class Player extends Entity {
 
   // Take the scene, position and sprite as arguments for creation
   constructor(scene, x, y, children, data) {
-    super(scene, x, y, children);
+    super(scene, x, y, children, data);
+
+    // Set physics body properties
+    this.body
+      .setOffset(0, 6);
 
     // Weapon
     this.weapon = children[1];
