@@ -70,7 +70,7 @@ export class Loading extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: 'skeleton_idle',
+      key: 'skelet_idle',
       frames: this.anims.generateFrameNames('dungeon-sprites', {
         start: 0,
         end: 3,

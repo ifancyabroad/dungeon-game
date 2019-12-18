@@ -37,7 +37,8 @@ export class Enemy extends Entity {
     this.setData({
       health: data.stats.health,
       maxHealth: data.stats.health,
-      speed: data.stats.speed
+      speed: data.stats.speed,
+      sprite: data.sprite
     });
   }
 
@@ -71,9 +72,9 @@ export class Enemy extends Entity {
 
     // If not moving play idle animation
     if (this.body.velocity.x !== 0 || this.body.velocity.y !== 0) {
-      this.sprite.play('skelet_run', true);
+      this.sprite.play(`${this.data.values.sprite}_run`, true);
     } else {
-      this.sprite.play('skeleton_idle', true);
+      this.sprite.play(`${this.data.values.sprite}_idle`, true);
     }
   }
 
@@ -108,26 +109,35 @@ export class Enemy extends Entity {
   // Attack the player
   attackPlayer(player) {
     this.body.moves = false;
-    // this.body.stop();
     player.takeHit(this);
   }
 
-  // Temporarily stunned after being attacked
-  stunned(player) {
+  // Take a hit from the player
+  takeHit(damage, player) {
+    this.stunned();
+    this.flash();
+    this.knockback(player);
+    this.data.values.health -= damage;
+  }
 
-    // Change state
+  // Temporarily stunned after being attacked
+  stunned() {
     this.setState(2);
     this.scene.time.delayedCall(1000, () => {
       this.setState(0);
-    }, null, this);
+    }, null, this);        
+  }
 
-    // Flash white
+  // Flash white
+  flash() {
     this.sprite.setTintFill();
     this.scene.time.delayedCall(200, () => {
       this.sprite.clearTint();
     }, null, this);
+  }
 
-    // Knockback effect
+  // Knockback effect
+  knockback(player) {
     const x = this.body.x - player.body.x;
     const y = this.body.y - player.body.y;
     this.body.velocity.x += x * 5;
@@ -139,11 +149,5 @@ export class Enemy extends Entity {
     this.setState(3);
     this.emitter.emitParticleAt(this.x, this.y);
     this.destroy();
-  }
-
-  // Take a hit from the player
-  takeHit(damage, player) {
-    this.stunned(player);
-    this.data.values.health -= damage;
   }
 }

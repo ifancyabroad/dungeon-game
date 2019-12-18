@@ -30,7 +30,8 @@ export class Player extends Entity {
     this.setData({
       lives: data.lives,
       maxLives: data.maxLives,
-      speed: data.speed
+      speed: data.speed,
+      size: data.size
     });
 
     // UI setup
@@ -127,16 +128,26 @@ export class Player extends Entity {
     enemy.takeHit(weapon.damage, this);
   }
 
+  // Take a hit from an enemy
+  takeHit(enemy) {
+    if (this.state !== 2) {
+      this.stunned();
+      this.flash();
+      this.data.values.lives--;
+      this.updateHearts();
+    }
+  }
+
   // Temporary invincibility after being hit
   stunned() {
-
-    // Change state
     this.setState(2);
     this.scene.time.delayedCall(1000, () => {
       this.setState(0);
-    }, null, this);
+    }, null, this);    
+  }
 
-    // Flash red
+  // Flash red
+  flash() {
     this.sprite.setTintFill(0xff0000);
     this.scene.time.delayedCall(200, () => {
       this.sprite.clearTint();
@@ -148,14 +159,5 @@ export class Player extends Entity {
     this.setState(3);
     this.scene.gameOver();
     this.destroy();
-  }
-
-  // Take a hit from an enemy
-  takeHit(enemy) {
-    if (this.state !== 2) {
-      this.stunned();
-      this.data.values.lives--;
-      this.updateHearts();
-    }
   }
 }
