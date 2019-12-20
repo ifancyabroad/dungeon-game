@@ -7,9 +7,10 @@ export class Loading extends Phaser.Scene {
   preload() {
     this.load.atlas('dungeon-sprites', 'assets/texture-atlas/0x72_DungeonTilesetII_v1.3.png', 'assets/texture-atlas/0x72_DungeonTilesetII_v1.3.json');
     this.load.image('tiles', 'assets/rooms/0x72_DungeonTilesetII_v1.3.png');
-    this.load.tilemapTiledJSON('room', 'assets/rooms/basic.json');
     this.load.image('graveyard', 'assets/images/background.png');
     this.load.json('enemyData', 'assets/data/enemies.json');
+    this.load.json('roomData', 'assets/data/rooms.json');
+    this.load.tilemapTiledJSON('room', 'assets/rooms/basic.json');
 
     const loadingBar = this.add.graphics({
       fillStyle: {
