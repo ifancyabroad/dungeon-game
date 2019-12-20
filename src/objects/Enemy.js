@@ -113,11 +113,11 @@ export class Enemy extends Entity {
   }
 
   // Take a hit from the player
-  takeHit(damage, player) {
+  takeHit(weapon, player) {
     this.stunned();
     this.flash();
-    this.knockback(player);
-    this.data.values.health -= damage;
+    this.knockback(weapon.knockback, player);
+    this.data.values.health -= weapon.damage;
   }
 
   // Temporarily stunned after being attacked
@@ -137,11 +137,11 @@ export class Enemy extends Entity {
   }
 
   // Knockback effect
-  knockback(player) {
+  knockback(force, player) {
     const x = this.body.x - player.body.x;
     const y = this.body.y - player.body.y;
-    this.body.velocity.x += x * 5;
-    this.body.velocity.y += y * 5;
+    this.body.velocity.x += x * force;
+    this.body.velocity.y += y * force;
   }
 
   // Destroy game object and show death explosion

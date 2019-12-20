@@ -9,7 +9,7 @@ export class Weapon extends Phaser.GameObjects.Sprite {
     // Create the sprite to move and animate
     this.scene.add
       .existing(this)
-      .setY(4)
+      .setDepth(4)
       .setOrigin(0.5, 1);
 
     // Set hitbox
@@ -17,9 +17,20 @@ export class Weapon extends Phaser.GameObjects.Sprite {
     this.body
       .setSize(16, 16);
 
+    // Set collision for pickup
+    this.collider = this.scene.physics.world.addOverlap(this, this.scene.player, this.equip, null, this);
+
+    // States
+    /*  0: Not equipped/active
+    *   1: Equipped/active
+    *   2: In use
+    */  
+
     // Custom variables
-    this.setState(1);
+    this.setState(0);
+    this.setName('weapon');
     this.damage = 50;
+    this.knockback = 5;
   }
 
   update(player) {
@@ -39,6 +50,20 @@ export class Weapon extends Phaser.GameObjects.Sprite {
     }
   }
 
+  // Weapon picked up
+  equip() {
+    this.setY(4);
+    this.setState(1);
+    this.scene.physics.world.removeCollider(this.collider);
+    this.scene.player.pickup(this)
+  }
+
+  // Weapon dropped
+  unequip() {
+    this.setState(0);
+    this.scene.physics.world.colliders.add(this.collider);
+  }
+
   // Play attack animation
   attack(player) {
     if (this.state !== 2) {
@@ -56,7 +81,7 @@ export class Weapon extends Phaser.GameObjects.Sprite {
         duration: 100,
         yoyo: true,
         onComplete() {
-          this.setState(1);;
+          this.setState(1);
         },
         callbackScope: this
       });

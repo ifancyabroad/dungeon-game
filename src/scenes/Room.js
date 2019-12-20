@@ -19,6 +19,7 @@ export class Room extends Phaser.Scene {
     this.createPlayer(data.player);
     this.generateRoom();
     this.generateEnemies();
+    this.generateItems();
     this.setCollision();
 
     // Fade in
@@ -38,12 +39,11 @@ export class Room extends Phaser.Scene {
   // Create the player with a weapon
   createPlayer(data) {
     const hero = this.add.sprite(0, 0, 'dungeon-sprites', 'frames/knight_m_idle_anim_f0.png');
-    const weapon = new Weapon(this, 0, 0, 'dungeon-sprites', 'frames/weapon_regular_sword.png');
     this.player = new Player(
       this,
       (this.game.config.width / 2) - 16,
       (this.game.config.height / 2) - 16,
-      [hero, weapon],
+      [hero],
       data
     );
   }
@@ -71,6 +71,11 @@ export class Room extends Phaser.Scene {
     this.cleared = !this.enemies.getLength();
   }
 
+  // Populate room with any items
+  generateItems() {
+    this.weapon = new Weapon(this, 100, 100, 'dungeon-sprites', 'frames/weapon_regular_sword.png');
+  }
+
   // Set collisions
   setCollision() {
     this.wallsBelowLayer.setCollisionByProperty({ collides: true });
@@ -85,7 +90,6 @@ export class Room extends Phaser.Scene {
 
   // Room completed; OPEN THE DOORS!
   roomComplete() {
-    console.log('Enemies destroyed!');
     this.cleared = true;
     this.time.delayedCall(400, () => {
 
@@ -100,10 +104,7 @@ export class Room extends Phaser.Scene {
 
       // Set collision callback for door top
       const door = this.wallsBelowLayer.findByIndex(454);
-      this.wallsBelowLayer.setTileLocationCallback(door.x, door.y, 1, 1, () => {
-        console.log('Exit reached!');
-        this.nextRoom();
-      }, this);
+      this.wallsBelowLayer.setTileLocationCallback(door.x, door.y, 1, 1, this.nextRoom, this);
     }, null, this);
   }
 

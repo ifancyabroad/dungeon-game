@@ -10,10 +10,6 @@ export class Player extends Entity {
     this.body
       .setOffset(0, 6);
 
-    // Weapon
-    this.weapon = children[1];
-    this.sendToBack(this.weapon);
-
     // Create movement keys
     this.cursorKeys = scene.input.keyboard.createCursorKeys();
     this.spacebar = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -40,7 +36,9 @@ export class Player extends Entity {
 
   update() {
     this.controlManager();
-    this.weapon.update(this);
+    if (this.getByName('weapon')) {
+      this.weapon.update(this);
+    }
     this.aliveCheck();
   }
 
@@ -91,7 +89,7 @@ export class Player extends Entity {
   controlManager() {
 
     // Attack if spacebar is pressed
-    if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
+    if (Phaser.Input.Keyboard.JustDown(this.spacebar) && this.getByName('weapon')) {
       this.weapon.attack(this);
     }
 
@@ -125,7 +123,7 @@ export class Player extends Entity {
 
   // Register a hit on the enemy!
   hit(weapon, enemy) {
-    enemy.takeHit(weapon.damage, this);
+    enemy.takeHit(weapon, this);
   }
 
   // Take a hit from an enemy
@@ -152,6 +150,13 @@ export class Player extends Entity {
     this.scene.time.delayedCall(200, () => {
       this.sprite.clearTint();
     }, null, this);
+  }
+
+  // Pickup a weapon
+  pickup(weapon) {
+    this.add(weapon);
+    this.weapon = this.getByName('weapon');
+    this.sendToBack(this.weapon);
   }
 
   // Destroy game object and change scenes
