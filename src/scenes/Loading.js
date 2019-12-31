@@ -9,6 +9,7 @@ export class Loading extends Phaser.Scene {
     this.load.image('tiles', 'assets/rooms/0x72_DungeonTilesetII_v1.3.png');
     this.load.image('graveyard', 'assets/images/background.png');
     this.load.json('enemyData', 'assets/data/enemies.json');
+    this.load.json('weaponData', 'assets/data/weapons.json');
     this.load.json('roomData', 'assets/data/rooms.json');
     this.load.tilemapTiledJSON('room', 'assets/rooms/basic.json');
 

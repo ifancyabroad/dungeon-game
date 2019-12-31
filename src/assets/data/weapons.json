@@ -1,0 +1,26 @@
+[
+	{
+		"name": "Sword",
+		"sprite": "regular_sword",
+		"stats": {
+			"damage": 50,
+			"knockback": 5
+		},
+		"size": {
+			"width": 16,
+			"height": 16
+		}
+	},
+	{
+		"name": "Hammer",
+		"sprite": "hammer",
+		"stats": {
+			"damage": 75,
+			"knockback": 7
+		},
+		"size": {
+			"width": 18,
+			"height": 18
+		}
+	}
+]

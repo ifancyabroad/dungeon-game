@@ -116,8 +116,8 @@ export class Enemy extends Entity {
   takeHit(weapon, player) {
     this.stunned();
     this.flash();
-    this.knockback(weapon.knockback, player);
-    this.data.values.health -= weapon.damage;
+    this.knockback(weapon.getData('knockback'), player);
+    this.data.values.health -= weapon.getData('damage');
   }
 
   // Temporarily stunned after being attacked

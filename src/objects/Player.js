@@ -36,9 +36,6 @@ export class Player extends Entity {
 
   update() {
     this.controlManager();
-    if (this.getByName('weapon')) {
-      this.weapon.update(this);
-    }
     this.aliveCheck();
   }
 
@@ -154,9 +151,17 @@ export class Player extends Entity {
 
   // Pickup a weapon
   pickup(weapon) {
+    if (this.weapon) {
+      this.weapon.unequip(this);
+    }
     this.add(weapon);
+    this.sendToBack(weapon);
     this.weapon = this.getByName('weapon');
-    this.sendToBack(this.weapon);
+  }
+
+  // Drop a weapon
+  drop(weapon) {
+    this.remove(weapon);
   }
 
   // Destroy game object and change scenes

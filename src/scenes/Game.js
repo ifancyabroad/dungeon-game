@@ -9,6 +9,7 @@ export class Game extends Phaser.Scene {
   create(data) {
     this.playerData = data.player;
     this.enemyData = this.cache.json.get('enemyData');
+    this.weaponData = this.cache.json.get('weaponData');
     this.roomData = this.cache.json.get('roomData');
 
     // Create dungeon

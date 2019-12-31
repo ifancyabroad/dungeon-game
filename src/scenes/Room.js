@@ -34,6 +34,7 @@ export class Room extends Phaser.Scene {
         this.roomComplete();
       }  
     }
+    this.items.getChildren().forEach(item => item.update());
   }
 
   // Create the player with a weapon
@@ -62,18 +63,37 @@ export class Room extends Phaser.Scene {
   // Populate room with enemies
   generateEnemies() {
     this.enemies = this.add.group();
-    const enemyLocations = this.room.filterObjects('Enemies', (object) => object.name === 'Skeleton');
-    enemyLocations.forEach(location => {
-      const skeleton = this.add.sprite(0, 0, 'dungeon-sprites', 'frames/skelet_idle_anim_f0.png');
-      const enemy = new Enemy(this, location.x, location.y, [skeleton], this.mainScene.enemyData[0]);
-      this.enemies.add(enemy);
-    });
+    // const enemyLocations = this.room.filterObjects('Enemies', (object) => object.name === 'Skeleton');
+    // enemyLocations.forEach(location => {
+    //   const skeleton = this.add.sprite(0, 0, 'dungeon-sprites', 'frames/skelet_idle_anim_f0.png');
+    //   const enemy = new Enemy(this, location.x, location.y, [skeleton], this.mainScene.enemyData[0]);
+    //   this.enemies.add(enemy);
+    // });
     this.cleared = !this.enemies.getLength();
   }
 
   // Populate room with any items
   generateItems() {
-    this.weapon = new Weapon(this, 100, 100, 'dungeon-sprites', 'frames/weapon_regular_sword.png');
+    this.items = this.add.group();
+    const sword = new Weapon(
+      this,
+      100,
+      100,
+      'dungeon-sprites',
+      `frames/weapon_${this.mainScene.weaponData[0].sprite}.png`,
+      this.mainScene.weaponData[0]
+    );
+
+    const hammer = new Weapon(
+      this,
+      150,
+      175,
+      'dungeon-sprites',
+      `frames/weapon_${this.mainScene.weaponData[1].sprite}.png`,
+      this.mainScene.weaponData[1]
+    );
+
+    this.items.addMultiple([sword, hammer]);
   }
 
   // Set collisions
