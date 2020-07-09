@@ -2,6 +2,10 @@
 	{
 		"name": "Skeleton",
 		"sprite": "skelet",
+		"animations": [
+			"skelet_run",
+			"skelet_idle"
+		],
 		"stats": {
 			"health": 100,
 			"speed": 50
@@ -14,6 +18,10 @@
 	{
 		"name": "Orc Warrior",
 		"sprite": "orc_warrior",
+		"animations": [
+			"orc_warrior_run",
+			"orc_warrior_idle"
+		],
 		"stats": {
 			"health": 150,
 			"speed": 30

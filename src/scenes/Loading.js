@@ -30,6 +30,12 @@ export class Loading extends Phaser.Scene {
   }
 
   create() {
+    this.generatePlayerAnimations();
+    this.generateEnemyAnimations();
+    this.scene.start('menu');
+  }
+
+  generatePlayerAnimations() {
     this.anims.create({
       key: 'knight_run',
       frames: this.anims.generateFrameNames('dungeon-sprites', {
@@ -62,51 +68,23 @@ export class Loading extends Phaser.Scene {
       frameRate: 1,
       repeat: -1
     });
+  }
 
-    this.anims.create({
-      key: 'skelet_run',
-      frames: this.anims.generateFrameNames('dungeon-sprites', {
-        start: 0,
-        end: 3,
-        prefix: 'frames/skelet_run_anim_f', suffix: '.png'
-      }),
-      frameRate: 10,
-      repeat: -1
+  generateEnemyAnimations() {
+    const enemyData = this.cache.json.get('enemyData');
+    enemyData.forEach(enemy => {
+      enemy.animations.forEach(animation => {
+        this.anims.create({
+          key: animation,
+          frames: this.anims.generateFrameNames('dungeon-sprites', {
+            start: 0,
+            end: 3,
+            prefix: `frames/${animation}_anim_f`, suffix: '.png'
+          }),
+          frameRate: 10,
+          repeat: -1
+        });
+      })
     });
-
-    this.anims.create({
-      key: 'skelet_idle',
-      frames: this.anims.generateFrameNames('dungeon-sprites', {
-        start: 0,
-        end: 3,
-        prefix: 'frames/skelet_idle_anim_f', suffix: '.png'
-      }),
-      frameRate: 10,
-      repeat: -1
-    });
-
-    this.anims.create({
-      key: 'orc_warrior_run',
-      frames: this.anims.generateFrameNames('dungeon-sprites', {
-        start: 0,
-        end: 3,
-        prefix: 'frames/orc_warrior_run_anim_f', suffix: '.png'
-      }),
-      frameRate: 10,
-      repeat: -1
-    });
-
-    this.anims.create({
-      key: 'orc_warrior_idle',
-      frames: this.anims.generateFrameNames('dungeon-sprites', {
-        start: 0,
-        end: 3,
-        prefix: 'frames/orc_warrior_idle_anim_f', suffix: '.png'
-      }),
-      frameRate: 10,
-      repeat: -1
-    });
-
-    this.scene.start('menu');
   }
 }
