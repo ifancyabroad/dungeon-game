@@ -11,6 +11,7 @@ export class Room extends Phaser.Scene {
   create(data) {
     this.roomKey = data.room.roomKey;
     this.roomId = data.room.id;
+    this.floorId = data.room.floor
     this.mainScene = data.scene;
 
     // Particle manager
@@ -130,8 +131,17 @@ export class Room extends Phaser.Scene {
 
   // Proceed to the next room
   nextRoom() {
+    const finalRoom = this.mainScene.dungeon.noRooms
+    let nextRoom = this.roomId + 1;
+    let nextRoomFloor = this.floorId;
+
+    if (this.roomId >= finalRoom) {
+      nextRoom = 1;
+      nextRoomFloor++;
+    }
+
     this.scene.restart({
-      room: this.mainScene.dungeon.getRoom(this.roomId + 1),
+      room: this.mainScene.dungeon.getRoom(nextRoomFloor, nextRoom),
       scene: this.mainScene,
       player: this.player.data.getAll()
     });

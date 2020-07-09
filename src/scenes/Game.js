@@ -31,7 +31,7 @@ export class Game extends Phaser.Scene {
 
   gameStart() {
     this.scene.launch('room', {
-      room: this.dungeon.floors[0][0],
+      room: this.dungeon.floors[0].rooms[0],
       scene: this,
       player: this.playerData
     });
