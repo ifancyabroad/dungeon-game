@@ -85,6 +85,28 @@ export class Loading extends Phaser.Scene {
       repeat: -1
     });
 
+    this.anims.create({
+      key: 'orc_warrior_run',
+      frames: this.anims.generateFrameNames('dungeon-sprites', {
+        start: 0,
+        end: 3,
+        prefix: 'frames/orc_warrior_run_anim_f', suffix: '.png'
+      }),
+      frameRate: 10,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: 'orc_warrior_idle',
+      frames: this.anims.generateFrameNames('dungeon-sprites', {
+        start: 0,
+        end: 3,
+        prefix: 'frames/orc_warrior_idle_anim_f', suffix: '.png'
+      }),
+      frameRate: 10,
+      repeat: -1
+    });
+
     this.scene.start('menu');
   }
 }
