@@ -13,6 +13,7 @@ export class Room extends Phaser.Scene {
     this.roomId = data.room.id;
     this.floorId = data.room.floor
     this.mainScene = data.scene;
+    this.cleared = false;
 
     // Particle manager
     this.particles = this.add.particles('dungeon-sprites').setDepth(5);
@@ -74,7 +75,6 @@ export class Room extends Phaser.Scene {
         this.enemies.add(enemy);
       });
     }
-    this.cleared = !this.enemies.getLength();
   }
 
   // Populate room with any weapons
