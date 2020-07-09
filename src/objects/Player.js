@@ -167,7 +167,8 @@ export class Player extends Entity {
   // Destroy game object and change scenes
   death() {
     this.setState(3);
-    this.scene.gameOver();
+    this.scene.scene.setActive(false);
+    this.scene.mainScene.gameOver();
     this.destroy();
   }
 }

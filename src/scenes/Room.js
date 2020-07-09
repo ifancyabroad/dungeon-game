@@ -63,12 +63,12 @@ export class Room extends Phaser.Scene {
   // Populate room with enemies
   generateEnemies() {
     this.enemies = this.add.group();
-    // const enemyLocations = this.room.filterObjects('Enemies', (object) => object.name === 'Skeleton');
-    // enemyLocations.forEach(location => {
-    //   const skeleton = this.add.sprite(0, 0, 'dungeon-sprites', 'frames/skelet_idle_anim_f0.png');
-    //   const enemy = new Enemy(this, location.x, location.y, [skeleton], this.mainScene.enemyData[0]);
-    //   this.enemies.add(enemy);
-    // });
+    const enemyLocations = this.room.filterObjects('Enemies', (object) => object.name === 'Skeleton');
+    enemyLocations.forEach(location => {
+      const skeleton = this.add.sprite(0, 0, 'dungeon-sprites', 'frames/skelet_idle_anim_f0.png');
+      const enemy = new Enemy(this, location.x, location.y, [skeleton], this.mainScene.enemyData[0]);
+      this.enemies.add(enemy);
+    });
     this.cleared = !this.enemies.getLength();
   }
 
