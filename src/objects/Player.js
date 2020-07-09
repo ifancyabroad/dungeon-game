@@ -86,7 +86,7 @@ export class Player extends Entity {
   controlManager() {
 
     // Attack if spacebar is pressed
-    if (Phaser.Input.Keyboard.JustDown(this.spacebar) && this.getByName('weapon')) {
+    if (Phaser.Input.Keyboard.JustDown(this.spacebar) && this.weapon) {
       this.weapon.attack(this);
     }
 
@@ -156,7 +156,7 @@ export class Player extends Entity {
     }
     this.add(weapon);
     this.sendToBack(weapon);
-    this.weapon = this.getByName('weapon');
+    this.weapon = weapon;
   }
 
   // Drop a weapon

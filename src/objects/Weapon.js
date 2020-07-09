@@ -24,7 +24,7 @@ export class Weapon extends Phaser.GameObjects.Sprite {
     this.setState(0);
 
     // Custom variables
-    this.setName('weapon');
+    this.setName(data.name);
     this.setData({
       damage: data.stats.damage,
       knockback: data.stats.knockback,
