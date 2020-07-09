@@ -30,5 +30,21 @@
 			"width": 12,
 			"height": 12
 		}
+	},
+	{
+		"name": "Goblin",
+		"sprite": "goblin",
+		"animations": [
+			"goblin_run",
+			"goblin_idle"
+		],
+		"stats": {
+			"health": 40,
+			"speed": 70
+		},
+		"size": {
+			"width": 12,
+			"height": 6
+		}
 	}
 ]

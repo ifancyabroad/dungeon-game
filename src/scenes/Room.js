@@ -17,8 +17,8 @@ export class Room extends Phaser.Scene {
     // Particle manager
     this.particles = this.add.particles('dungeon-sprites').setDepth(5);
 
-    this.createPlayer(data.player);
     this.generateRoom();
+    this.createPlayer(data.player);
     this.generateEnemies();
     this.generateWeapons(data.weapon);
     this.setCollision();
@@ -38,18 +38,6 @@ export class Room extends Phaser.Scene {
     this.weapons.getChildren().forEach(weapon => weapon.update());
   }
 
-  // Create the player with a weapon
-  createPlayer(data) {
-    const hero = this.add.sprite(0, 0, 'dungeon-sprites', 'frames/knight_m_idle_anim_f0.png');
-    this.player = new Player(
-      this,
-      (this.game.config.width / 2) - 16,
-      (this.game.config.height / 2) - 16,
-      [hero],
-      data
-    );
-  }
-
   // Generate a room
   generateRoom() {
     this.room = this.make.tilemap({ key: this.roomKey });
@@ -59,6 +47,19 @@ export class Room extends Phaser.Scene {
     this.belowLayer = this.room.createStaticLayer('Below Player', tileset, 0, 0).setDepth(1);
     this.wallsBelowLayer = this.room.createDynamicLayer('Walls Below', tileset, 0, 0).setDepth(2);
     this.wallsAboveLayer = this.room.createStaticLayer('Walls Above', tileset, 0, 0).setDepth(10);
+  }
+
+  // Create the player with a weapon
+  createPlayer(data) {
+    const hero = this.add.sprite(0, 0, 'dungeon-sprites', 'frames/knight_m_idle_anim_f0.png');
+    const spawn = this.room.filterObjects('Player', (object) => object.name === 'Spawn')[0];
+    this.player = new Player(
+      this,
+      spawn.x,
+      spawn.y,
+      [hero],
+      data
+    );
   }
 
   // Populate room with enemies
