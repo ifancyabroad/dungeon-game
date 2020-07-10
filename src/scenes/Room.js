@@ -164,7 +164,7 @@ export class Room extends Phaser.Scene {
       room: this.mainScene.dungeon.getRoom(nextRoomFloor, nextRoom),
       scene: this.mainScene,
       player: this.player.data.getAll(),
-      weapon: this.player.weapon.name
+      weapon: this.player.weapon ? this.player.weapon.name : null
     });
   }
 }
