@@ -1,6 +1,7 @@
 import { Weapon } from "../objects/Weapon";
 import { Player } from "../objects/Player";
 import { Enemy } from "../objects/Enemy";
+import { Coin } from "../objects/Coin";
 
 export class Room extends Phaser.Scene {
 
@@ -22,6 +23,7 @@ export class Room extends Phaser.Scene {
     this.createPlayer(data.player);
     this.generateEnemies();
     this.generateWeapons(data.weapon);
+    this.generateItems();
     this.setCollision();
 
     // Fade in
@@ -96,6 +98,18 @@ export class Room extends Phaser.Scene {
         const data = this.mainScene.weaponData.find(w => w.name === object.name)
         const weapon = new Weapon(this, object.x, object.y, 'dungeon-sprites', `frames/weapon_${data.sprite}.png`, data);
         this.weapons.add(weapon);
+      });
+    }
+  }
+
+  // Populate room with consumables
+  generateItems() {
+    this.items = this.add.group();
+    const itemLayer = this.room.getObjectLayer('Items');
+    if (itemLayer) {
+      itemLayer.objects.forEach(object => {
+        const coin = new Coin(this, object.x, object.y, 'dungeon-sprites', `frames/coin_anim_f0.png`);
+        this.items.add(coin);
       });
     }
   }

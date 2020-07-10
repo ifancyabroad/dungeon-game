@@ -35,6 +35,7 @@ export class Player extends Entity {
     // UI setup
     this.setHearts();
     this.setScore();
+    this.setGold();
   }
 
   update() {
@@ -101,7 +102,27 @@ export class Player extends Entity {
   // Update score
   updateScore(points) {
     this.data.values.score += points;
-    this.scoreDisplay.setText(`Score: ${this.getData('score')}`)
+    this.scoreDisplay.setText(`Score: ${this.getData('score')}`);
+  }
+
+  // Add gold display
+  setGold() {
+    let x = 100;
+    let y = 10;
+    const goldIcon = this.scene.add.image(x, y - 1, 'dungeon-sprites', 'frames/coin_anim_f0.png').setScale(1.5);
+    this.goldDisplay = this.scene.add.text(goldIcon.x + goldIcon.width * 2 + 2, y, this.getData('gold'), {
+      fontFamily: '"Helvetica"',
+      fontSize: '14px',
+      fill: '#ddd',
+      stroke: '#101319',
+      strokeThickness: 4
+    }).setOrigin(1, 0.5);
+  }
+
+  // Update gold
+  updateGold(gold) {
+    this.data.values.gold += gold;
+    this.goldDisplay.setText(this.getData('gold'));
   }
 
   // Move player according to cursor keys
