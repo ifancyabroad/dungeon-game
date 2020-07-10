@@ -129,6 +129,9 @@ export class Room extends Phaser.Scene {
       // Set collision callback for door top
       const door = this.wallsBelowLayer.findByIndex(454);
       this.wallsBelowLayer.setTileLocationCallback(door.x, door.y, 1, 1, this.nextRoom, this);
+
+      // Update player score
+      this.player.updateScore(100);
     }, null, this);
   }
 

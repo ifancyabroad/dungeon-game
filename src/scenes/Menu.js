@@ -93,6 +93,8 @@ export class Menu extends Phaser.Scene {
     this.cameras.main.once('camerafadeoutcomplete', () => {
       this.scene.start('playGame', {
         player: {
+          score: 0,
+          gold: 0,
           lives: 6,
           maxLives: 6,
           speed: 100,

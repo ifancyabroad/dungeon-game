@@ -6,6 +6,7 @@
 			"skelet_run",
 			"skelet_idle"
 		],
+		"value": 10,
 		"stats": {
 			"health": 100,
 			"speed": 50
@@ -22,6 +23,7 @@
 			"orc_warrior_run",
 			"orc_warrior_idle"
 		],
+		"value": 20,
 		"stats": {
 			"health": 150,
 			"speed": 30
@@ -38,6 +40,7 @@
 			"goblin_run",
 			"goblin_idle"
 		],
+		"value": 5,
 		"stats": {
 			"health": 40,
 			"speed": 70

@@ -24,6 +24,8 @@ export class Player extends Entity {
 
     // Custom variables
     this.setData({
+      score: data.score,
+      gold: data.gold,
       lives: data.lives,
       maxLives: data.maxLives,
       speed: data.speed,
@@ -31,7 +33,8 @@ export class Player extends Entity {
     });
 
     // UI setup
-    this.setUI();
+    this.setHearts();
+    this.setScore();
   }
 
   update() {
@@ -48,8 +51,8 @@ export class Player extends Entity {
     }
   }
 
-  // Draw the UI to the screen
-  setUI() {
+  // Add hearts display
+  setHearts() {
     this.hearts = [];
     let x = 10;
     let y = 10;
@@ -80,6 +83,25 @@ export class Player extends Entity {
         this.hearts[i].setTexture('dungeon-sprites', 'frames/ui_heart_empty.png');
       }
     }
+  }
+
+  // Add score display
+  setScore() {
+    let x = this.scene.game.renderer.width - 5;
+    let y = 10;
+    this.scoreDisplay = this.scene.add.text(x, y, `Score: ${this.getData('score')}`, {
+      fontFamily: '"Helvetica"',
+      fontSize: '14px',
+      fill: '#ddd',
+      stroke: '#101319',
+      strokeThickness: 4
+    }).setOrigin(1, 0.5);
+  }
+
+  // Update score
+  updateScore(points) {
+    this.data.values.score += points;
+    this.scoreDisplay.setText(`Score: ${this.getData('score')}`)
   }
 
   // Move player according to cursor keys
