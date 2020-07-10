@@ -34,6 +34,7 @@ export class Loading extends Phaser.Scene {
     this.generatePlayerAnimations();
     this.generateEnemyAnimations();
     this.generateItemAnimations();
+    this.generateSpikeAnimations();
     this.scene.start('menu');
   }
 
@@ -99,6 +100,19 @@ export class Loading extends Phaser.Scene {
         prefix: `frames/coin_anim_f`, suffix: '.png'
       }),
       frameRate: 10,
+      repeat: -1
+    });
+  }
+
+  generateSpikeAnimations() {
+    this.anims.create({
+      key: 'floor_spikes',
+      frames: this.anims.generateFrameNames('dungeon-sprites', {
+        start: 0,
+        end: 3,
+        prefix: `frames/floor_spikes_anim_f`, suffix: '.png'
+      }),
+      frameRate: 5,
       repeat: -1
     });
   }

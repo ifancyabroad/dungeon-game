@@ -166,7 +166,7 @@ export class Player extends Entity {
     enemy.takeHit(weapon, this);
   }
 
-  // Take a hit from an enemy
+  // Take a hit
   takeHit(enemy) {
     if (this.state !== 2) {
       this.stunned();

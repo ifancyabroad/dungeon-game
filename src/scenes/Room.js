@@ -2,6 +2,7 @@ import { Weapon } from "../objects/Weapon";
 import { Player } from "../objects/Player";
 import { Enemy } from "../objects/Enemy";
 import { Coin } from "../objects/Coin";
+import { Spikes } from "../objects/Spikes";
 
 export class Room extends Phaser.Scene {
 
@@ -20,10 +21,11 @@ export class Room extends Phaser.Scene {
     this.particles = this.add.particles('dungeon-sprites').setDepth(5);
 
     this.generateRoom();
-    this.createPlayer(data.player);
+    this.generatePlayer(data.player);
     this.generateEnemies();
     this.generateWeapons(data.weapon);
     this.generateItems();
+    this.generateSpikes();
     this.setCollision();
 
     // Fade in
@@ -47,13 +49,13 @@ export class Room extends Phaser.Scene {
     const tileset = this.room.addTilesetImage('0x72_DungeonTilesetII_v1.3', 'tiles');
 
     // Create world layers
-    this.belowLayer = this.room.createStaticLayer('Below Player', tileset, 0, 0).setDepth(1);
+    this.belowLayer = this.room.createDynamicLayer('Below Player', tileset, 0, 0).setDepth(1);
     this.wallsBelowLayer = this.room.createDynamicLayer('Walls Below', tileset, 0, 0).setDepth(2);
     this.wallsAboveLayer = this.room.createStaticLayer('Walls Above', tileset, 0, 0).setDepth(10);
   }
 
-  // Create the player with a weapon
-  createPlayer(data) {
+  // Generate the player
+  generatePlayer(data) {
     const hero = this.add.sprite(0, 0, 'dungeon-sprites', 'frames/knight_m_idle_anim_f0.png');
     const spawn = this.room.filterObjects('Player', (object) => object.name === 'Spawn')[0];
     this.player = new Player(
@@ -108,10 +110,26 @@ export class Room extends Phaser.Scene {
     const itemLayer = this.room.getObjectLayer('Items');
     if (itemLayer) {
       itemLayer.objects.forEach(object => {
-        const coin = new Coin(this, object.x, object.y, 'dungeon-sprites', `frames/coin_anim_f0.png`);
+        const coin = new Coin(this, object.x, object.y, 'dungeon-sprites', 'frames/coin_anim_f0.png');
         this.items.add(coin);
       });
     }
+  }
+
+  // Replace spike tiles with interactable spike objects
+  generateSpikes() {
+    this.spikes = this.add.group();
+    this.belowLayer.forEachTile(tile => {
+      if (tile.index === 357) {
+        const x = tile.getCenterX();
+        const y = tile.getCenterY();
+        const spikes = new Spikes(this, x, y, 'frames/floor_spikes_anim_f0.png')
+        this.spikes.add(spikes);
+
+        // And lastly, remove the spike tile from the layer
+        this.belowLayer.removeTileAt(tile.x, tile.y);
+      }
+    });
   }
 
   // Set collisions

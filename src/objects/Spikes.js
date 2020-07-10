@@ -1,4 +1,4 @@
-export class Coin extends Phaser.Physics.Arcade.Sprite {
+export class Spikes extends Phaser.Physics.Arcade.Sprite {
 
   // Take the scene, position and sprite as arguments for creation
   constructor(scene, x, y, sprite, frame) {
@@ -13,17 +13,20 @@ export class Coin extends Phaser.Physics.Arcade.Sprite {
 
     // Set hitbox and collision
     this.scene.physics.world.enable(this);
-    this.collider = this.scene.physics.world.addOverlap(this, this.scene.player, this.collect, null, this);
+    this.collider = this.scene.physics.world.addOverlap(this, this.scene.player, this.hitPlayer, null, this);
 
-    this.play('coin');
+    this.body
+      .setSize(16, 16)
+      .setOffset(0)
+
+    this.play('floor_spikes');
   }
 
   update() {
   }
 
-  // Coin picked up
-  collect(coin, player) {
-    this.disableBody(true, true);
-    player.updateGold(1);
+  // Damage player
+  hitPlayer(spikes, player) {
+    player.takeHit();
   }
 }
