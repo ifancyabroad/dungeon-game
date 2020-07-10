@@ -5,41 +5,109 @@ export class Menu extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(this.game.renderer.width / 2, this.game.renderer.height / 2, 'graveyard')
-      .setScale(0.3)
+    this.add.image(this.game.renderer.width, 0, 'castle')
+      .setScale(0.6)
+      .setOrigin(1, 0)
       .setDepth(0);
 
-    this.add.text(this.game.renderer.width / 2, 100, 'DUNGEON GAME', {
-      fontFamily: '"Roboto Condensed"',
-      fontSize: '24px',
-      strokeThickness: 1
+    this.add.text(this.game.renderer.width / 2, 50, 'DUNGEON GAME', {
+      fontFamily: '"Times New Roman"',
+      fontSize: '30px',
+      fill: '#ddd',
+      stroke: '#101319',
+      strokeThickness: 6
     }).setOrigin(0.5);
 
-    this.add.text(this.game.renderer.width / 2, 200, '(PRESS SPACEBAR TO START)', {
-      fontFamily: '"Roboto Condensed"',
-      fontSize: '16px',
-      // strokeThickness: 1
-    }).setOrigin(0.5);
+    this.options = this.add.group([
+      this.add.text(this.game.renderer.width / 2, 140, 'Start', {
+        fontFamily: '"Helvetica"',
+        fontSize: '16px',
+        fill: '#ddd',
+        stroke: '#101319',
+        strokeThickness: 4
+      }).setOrigin(0.5),
+      this.add.text(this.game.renderer.width / 2, 180, 'Controls', {
+        fontFamily: '"Helvetica"',
+        fontSize: '16px',
+        fill: '#ddd',
+        stroke: '#101319',
+        strokeThickness: 4
+      }).setOrigin(0.5)
+    ]);
 
-    this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    this.currentIndex = 0;
+    const option = this.options.getChildren()[this.currentIndex];
+    this.cursor = this.add.container(option.x, option.y, [
+      this.add.sprite(-(option.width / 2 + 24), 0, 'dungeon-sprites', 'frames/weapon_knight_sword.png').setAngle(90),
+      this.add.sprite(option.width / 2 + 24, 0, 'dungeon-sprites', 'frames/weapon_knight_sword.png').setAngle(270)
+    ]);
+
+    this.keys = this.input.keyboard.addKeys({
+      up: Phaser.Input.Keyboard.KeyCodes.UP,
+      down: Phaser.Input.Keyboard.KeyCodes.DOWN,
+      space: Phaser.Input.Keyboard.KeyCodes.SPACE,
+      enter: Phaser.Input.Keyboard.KeyCodes.ENTER
+    });
   }
 
   update() {
-    // Start game if spacebar is pressed
-    if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
-
-      // Fade out
-      this.cameras.main.fadeOut(600);
-      this.cameras.main.once('camerafadeoutcomplete', () => {
-        this.scene.start('playGame', {
-          player: {
-            lives: 6,
-            maxLives: 6,
-            speed: 100,
-            size: { width: 16, height: 16 }
-          }
-        });
-      }, this);
+    // Menu up
+    if (Phaser.Input.Keyboard.JustDown(this.keys.up)) {
+      this.navigateMenu(-1);
     }
+    
+    // Menu down
+    if (Phaser.Input.Keyboard.JustDown(this.keys.down)) {
+      this.navigateMenu(1);
+    }
+
+    // Select
+    if (Phaser.Input.Keyboard.JustDown(this.keys.space) ||
+      Phaser.Input.Keyboard.JustDown(this.keys.enter)) {
+
+      switch (this.currentIndex) {
+        case 0:
+          this.start();
+          break;
+
+        case 1:
+          this.controls();
+          break;
+      
+        default:
+          break;
+      }
+    }
+  }
+
+  navigateMenu(index) {
+    if (this.currentIndex + index >= 0 &&
+      this.currentIndex + index < this.options.getLength()) {
+      this.currentIndex += index;
+
+      const option = this.options.getChildren()[this.currentIndex];
+      this.cursor.setPosition(option.x, option.y);
+      this.cursor.getAt(0).setX(-(option.width / 2 + 24));
+      this.cursor.getAt(1).setX(option.width / 2 + 24);
+    }
+  }
+
+  start() {
+    // Fade out
+    this.cameras.main.fadeOut(600);
+    this.cameras.main.once('camerafadeoutcomplete', () => {
+      this.scene.start('playGame', {
+        player: {
+          lives: 6,
+          maxLives: 6,
+          speed: 100,
+          size: { width: 16, height: 16 }
+        }
+      });
+    }, this);
+  }
+
+  controls() {
+
   }
 }
