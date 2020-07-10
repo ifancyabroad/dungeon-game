@@ -10,23 +10,18 @@ export class Menu extends Phaser.Scene {
       .setOrigin(1, 0)
       .setDepth(0);
 
-    this.add.text(this.game.renderer.width / 2, 50, 'DUNGEON GAME', {
-      fontFamily: '"Times New Roman"',
-      fontSize: '30px',
-      fill: '#ddd',
-      stroke: '#101319',
-      strokeThickness: 6
-    }).setOrigin(0.5);
+    this.add.image(this.game.renderer.width / 2, 60, 'logo')
+      .setScale(0.5);
 
     this.options = this.add.group([
-      this.add.text(this.game.renderer.width / 2, 140, 'Start', {
+      this.add.text(this.game.renderer.width / 2, 160, 'Start', {
         fontFamily: '"Helvetica"',
         fontSize: '16px',
         fill: '#ddd',
         stroke: '#101319',
         strokeThickness: 4
       }).setOrigin(0.5),
-      this.add.text(this.game.renderer.width / 2, 180, 'Controls', {
+      this.add.text(this.game.renderer.width / 2, 200, 'Controls', {
         fontFamily: '"Helvetica"',
         fontSize: '16px',
         fill: '#ddd',

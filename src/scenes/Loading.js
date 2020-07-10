@@ -8,6 +8,7 @@ export class Loading extends Phaser.Scene {
     this.load.atlas('dungeon-sprites', 'assets/texture-atlas/0x72_DungeonTilesetII_v1.3.png', 'assets/texture-atlas/0x72_DungeonTilesetII_v1.3.json');
     this.load.image('tiles', 'assets/rooms/0x72_DungeonTilesetII_v1.3.png');
     this.load.image('castle', 'assets/images/background.png');
+    this.load.image('logo', 'assets/images/logo.png');
     this.load.json('enemyData', 'assets/data/enemies.json');
     this.load.json('weaponData', 'assets/data/weapons.json');
     this.load.json('roomData', 'assets/data/rooms.json');
