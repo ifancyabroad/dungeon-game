@@ -12,6 +12,9 @@ export class Loading extends Phaser.Scene {
     this.load.json('enemyData', 'assets/data/enemies.json');
     this.load.json('weaponData', 'assets/data/weapons.json');
     this.load.json('roomData', 'assets/data/rooms.json');
+    this.load.audio('menuMusic', 'assets/sounds/POL-random-encounter-short.wav');
+    this.load.audio('menuSelect', 'assets/sounds/warfare_swords_x_2_hit_scrape_004.mp3');
+    this.load.audio('dungeonMusic', 'assets/sounds/POL-fortress-short.wav');
 
     for (let i = 1; i <= 10; i++) {
       this.load.tilemapTiledJSON(`room${i}`, `assets/rooms/basic${i}.json`);

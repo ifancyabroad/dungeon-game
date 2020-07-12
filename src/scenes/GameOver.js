@@ -23,6 +23,8 @@ export class GameOver extends Phaser.Scene {
   update() {
     // Return to menu if spacebar is pressed
     if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
+      this.sound.stopAll();
+      this.sound.play('menuSelect');
 
       // Fade out
       this.cameras.main.fadeOut(600);

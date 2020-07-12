@@ -11,7 +11,7 @@ export class Room extends Phaser.Scene {
   }
 
   create(data) {
-    this.roomKey = data.room.roomKey;
+    this.roomKey = data.room.key;
     this.roomId = data.room.id;
     this.floorId = data.room.floor
     this.mainScene = data.scene;
@@ -20,6 +20,7 @@ export class Room extends Phaser.Scene {
     // Particle manager
     this.particles = this.add.particles('dungeon-sprites').setDepth(5);
 
+    this.startMusic(data.room.music);
     this.generateRoom();
     this.generatePlayer(data.player);
     this.generateEnemies();
@@ -41,6 +42,21 @@ export class Room extends Phaser.Scene {
       }  
     }
     this.weapons.getChildren().forEach(weapon => weapon.update());
+  }
+
+  // Check music
+  startMusic(roomMusic) {
+    this.music = this.sound.sounds.find(sound => sound.key === roomMusic);
+    if (!this.music) {
+      this.music = this.sound.add(roomMusic);
+    }
+    if (!this.music.isPlaying) {
+      this.sound.stopAll();
+      this.music.play({
+        loop: true,
+        volume: 0.1
+      });
+    }
   }
 
   // Generate a room

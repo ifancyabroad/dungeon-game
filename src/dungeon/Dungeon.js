@@ -23,7 +23,8 @@ export class Dungeon {
       rooms.push({
         floor: floorId,
         id: i,
-        roomKey: 'room' + i
+        key: 'room' + i,
+        music: 'dungeonMusic'
       })
     }
     return rooms;

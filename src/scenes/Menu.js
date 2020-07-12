@@ -5,6 +5,12 @@ export class Menu extends Phaser.Scene {
   }
 
   create() {
+    this.music = this.sound.add('menuMusic');
+    this.music.play({
+      loop: true,
+      volume: 0.1
+    });
+
     this.add.image(this.game.renderer.width, 0, 'castle')
       .setScale(0.6)
       .setOrigin(1, 0)
@@ -59,6 +65,7 @@ export class Menu extends Phaser.Scene {
     // Select
     if (Phaser.Input.Keyboard.JustDown(this.keys.space) ||
       Phaser.Input.Keyboard.JustDown(this.keys.enter)) {
+      this.sound.play('menuSelect');
 
       switch (this.currentIndex) {
         case 0:
