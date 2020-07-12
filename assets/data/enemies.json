@@ -1,0 +1,53 @@
+[
+	{
+		"name": "Skeleton",
+		"sprite": "skelet",
+		"animations": [
+			"skelet_run",
+			"skelet_idle"
+		],
+		"value": 10,
+		"stats": {
+			"health": 100,
+			"speed": 50
+		},
+		"size": {
+			"width": 12,
+			"height": 12
+		}
+	},
+	{
+		"name": "Orc Warrior",
+		"sprite": "orc_warrior",
+		"animations": [
+			"orc_warrior_run",
+			"orc_warrior_idle"
+		],
+		"value": 20,
+		"stats": {
+			"health": 150,
+			"speed": 30
+		},
+		"size": {
+			"width": 12,
+			"height": 12
+		}
+	},
+	{
+		"name": "Goblin",
+		"sprite": "goblin",
+		"animations": [
+			"goblin_run",
+			"goblin_idle"
+		],
+		"value": 5,
+		"stats": {
+			"health": 40,
+			"speed": 70
+		},
+		"size": {
+			"width": 12,
+			"height": 6
+		}
+	}
+]
