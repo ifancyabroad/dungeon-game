@@ -54,6 +54,77 @@
         }, 
         {
          "draworder":"topdown",
+         "id":6,
+         "name":"Items",
+         "objects":[
+                {
+                 "height":0,
+                 "id":8,
+                 "name":"Coin",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":64,
+                 "y":109
+                }, 
+                {
+                 "height":0,
+                 "id":9,
+                 "name":"Coin",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":64,
+                 "y":128
+                }, 
+                {
+                 "height":0,
+                 "id":10,
+                 "name":"Coin",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":64,
+                 "y":144
+                }, 
+                {
+                 "height":0,
+                 "id":11,
+                 "name":"Coin",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":64,
+                 "y":160
+                }, 
+                {
+                 "height":0,
+                 "id":12,
+                 "name":"Coin",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":64,
+                 "y":175
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
          "id":3,
          "name":"Enemies",
          "objects":[
@@ -158,8 +229,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":6,
- "nextobjectid":8,
+ "nextlayerid":7,
+ "nextobjectid":13,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.3.1",

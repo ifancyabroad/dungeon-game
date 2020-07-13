@@ -31,10 +31,10 @@ export class Game extends Phaser.Scene {
 
   gameStart() {
     this.scene.launch('room', {
-      room: this.dungeon.floors[0].rooms[9],
+      room: this.dungeon.floors[0].rooms[0],
       scene: this,
-      player: this.playerData,
-      weapon: 'Hammer'
+      player: this.playerData
+      // weapon: 'Hammer'
     });
     this.scene.bringToTop('room');
   }
