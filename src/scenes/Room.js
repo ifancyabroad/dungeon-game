@@ -16,6 +16,7 @@ export class Room extends Phaser.Scene {
     this.floorId = data.room.floor
     this.mainScene = data.scene;
     this.cleared = false;
+    this.bossRoom = this.roomId === this.mainScene.dungeon.noRooms;
 
     this.startMusic(data.room.music);
     this.generateRoom();
@@ -149,6 +150,7 @@ export class Room extends Phaser.Scene {
   setCollision() {
     this.wallsBelowLayer.setCollisionByProperty({ collides: true });
     this.wallsAboveLayer.setCollisionByProperty({ collides: true });
+    this.physics.world.addCollider(this.player, this.belowLayer);
     this.physics.world.addCollider(this.player, this.wallsBelowLayer);
     this.physics.world.addCollider(this.player, this.wallsAboveLayer);
     this.physics.world.addCollider(this.enemies);
@@ -160,34 +162,51 @@ export class Room extends Phaser.Scene {
   // Room completed; OPEN THE DOORS!
   roomComplete() {
     this.cleared = true;
+
     this.time.delayedCall(400, () => {
-      this.sound.play('door-open');
+      if (this.bossRoom) {
+        this.sound.play('stairs-open');
 
-      // Replace door tiles with open doors
-      this.wallsBelowLayer.replaceByIndex(451, 454);
-      this.wallsBelowLayer.replaceByIndex(452, 455);
-      this.wallsBelowLayer.replaceByIndex(483, 486);
-      this.wallsBelowLayer.replaceByIndex(484, 487);
+        // Replace floor tile with stairs down
+        const hiddenLayer = this.room.getObjectLayer('Hidden');
+        const exit = hiddenLayer.objects.find(object => object.name === 'Exit');
+        this.belowLayer.removeTileAtWorldXY(exit.x, exit.y);
+        this.belowLayer.putTileAtWorldXY(358, exit.x, exit.y);
 
-      // Remove collision on door base
-      this.wallsBelowLayer.setCollision([486, 487], false);
+        // Set collision callback for stairs
+        const stairs = this.belowLayer.findByIndex(358);
+        this.belowLayer.setTileLocationCallback(stairs.x, stairs.y, 1, 1, this.nextRoom, this);
 
-      // Set collision callback for door top
-      const door = this.wallsBelowLayer.findByIndex(454);
-      this.wallsBelowLayer.setTileLocationCallback(door.x, door.y, 1, 1, this.nextRoom, this);
-
-      // Update player score
-      this.player.updateScore(100);
+        // Update player score
+        this.player.updateScore(500);  
+      } else {
+        this.sound.play('door-open');
+  
+        // Replace door tiles with open doors
+        this.wallsBelowLayer.replaceByIndex(451, 454);
+        this.wallsBelowLayer.replaceByIndex(452, 455);
+        this.wallsBelowLayer.replaceByIndex(483, 486);
+        this.wallsBelowLayer.replaceByIndex(484, 487);
+  
+        // Remove collision on door base
+        this.wallsBelowLayer.setCollision([486, 487], false);
+  
+        // Set collision callback for door top
+        const door = this.wallsBelowLayer.findByIndex(454);
+        this.wallsBelowLayer.setTileLocationCallback(door.x, door.y, 1, 1, this.nextRoom, this);
+  
+        // Update player score
+        this.player.updateScore(100);   
+      }
     }, null, this);
   }
 
   // Proceed to the next room
   nextRoom() {
-    const finalRoom = this.mainScene.dungeon.noRooms
     let nextRoom = this.roomId + 1;
     let nextRoomFloor = this.floorId;
 
-    if (this.roomId >= finalRoom) {
+    if (this.bossRoom) {
       nextRoom = 1;
       nextRoomFloor++;
     }
