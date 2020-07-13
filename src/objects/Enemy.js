@@ -44,8 +44,8 @@ export class Enemy extends Entity {
   }
 
   update() {
-    this.setSprite();
     if (this.state !== 2) {
+      this.setSprite();
       this.collisionCheck();
     }
     this.stateManager();

@@ -9,15 +9,15 @@ export class Spikes extends Phaser.Physics.Arcade.Sprite {
     // Create the sprite to move and animate
     this.scene.add
       .existing(this)
-      .setDepth(4);
+      .setDepth(1);
 
     // Set hitbox and collision
     this.scene.physics.world.enable(this);
     this.collider = this.scene.physics.world.addOverlap(this, this.scene.player, this.hitPlayer, null, this);
 
     this.body
-      .setSize(16, 16)
-      .setOffset(0)
+      .setSize(14, 14)
+      .setOffset(1)
 
     this.play('floor_spikes');
   }

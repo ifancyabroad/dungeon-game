@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --config webpack/prod.js",
     "start": "webpack-dev-server --config webpack/base.js --open",
-    "gh-pages": "webpack --config webpack/prod.js && git subtree push --prefix dist origin gh-pages"
+    "gh-pages": "git subtree push --prefix dist origin gh-pages"
   },
   "repository": {
     "type": "git",
