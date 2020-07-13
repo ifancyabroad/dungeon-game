@@ -33,13 +33,11 @@ export class Room extends Phaser.Scene {
 
   update() {
     this.player.update();
-    if (!this.cleared) {
-      this.enemies.getChildren().forEach(enemy => enemy.update());
-      if (!this.enemies.getLength()) {
-        this.roomComplete();
-      }  
-    }
+    this.enemies.getChildren().forEach(enemy => enemy.update());
     this.weapons.getChildren().forEach(weapon => weapon.update());
+    if (!this.cleared && !this.enemies.getLength()) {
+      this.roomComplete();
+    }  
   }
 
   // Check music
