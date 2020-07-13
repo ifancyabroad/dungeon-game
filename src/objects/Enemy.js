@@ -33,6 +33,7 @@ export class Enemy extends Entity {
 
     // Custom variables
     this.setData({
+      type: data.type,
       value: data.value,
       health: data.stats.health,
       maxHealth: data.stats.health,
@@ -113,6 +114,7 @@ export class Enemy extends Entity {
 
   // Take a hit from the player
   takeHit(weapon, player) {
+    this.scene.sound.play(`${this.getData('type')}-hit`);
     this.stunned();
     this.flash();
     this.knockback(weapon.getData('knockback'), player);
@@ -145,6 +147,7 @@ export class Enemy extends Entity {
 
   // Destroy game object and show death explosion
   death() {
+    this.scene.sound.play(`${this.getData('type')}-death`);
     this.scene.player.updateScore(this.getData('value'));
     this.setState(3);
     this.emitter.emitParticleAt(this.x, this.y);

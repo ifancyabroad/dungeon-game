@@ -161,6 +161,7 @@ export class Room extends Phaser.Scene {
   roomComplete() {
     this.cleared = true;
     this.time.delayedCall(400, () => {
+      this.sound.play('door-open');
 
       // Replace door tiles with open doors
       this.wallsBelowLayer.replaceByIndex(451, 454);

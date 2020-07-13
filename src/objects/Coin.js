@@ -23,6 +23,7 @@ export class Coin extends Phaser.Physics.Arcade.Sprite {
 
   // Coin picked up
   collect(coin, player) {
+    this.scene.sound.play('coin', { volume: 0.3 });
     this.disableBody(true, true);
     player.updateGold(1);
   }
