@@ -36,6 +36,42 @@
 		}
 	},
 	{
+		"name": "Masked Orc",
+		"sprite": "masked_orc",
+		"type": "orc",
+		"animations": [
+			"masked_orc_run",
+			"masked_orc_idle"
+		],
+		"value": 25,
+		"stats": {
+			"health": 220,
+			"speed": 25
+		},
+		"size": {
+			"width": 12,
+			"height": 12
+		}
+	},
+	{
+		"name": "Ogre",
+		"sprite": "ogre",
+		"type": "orc",
+		"animations": [
+			"ogre_run",
+			"ogre_idle"
+		],
+		"value": 100,
+		"stats": {
+			"health": 500,
+			"speed": 15
+		},
+		"size": {
+			"width": 18,
+			"height": 18
+		}
+	},
+	{
 		"name": "Goblin",
 		"sprite": "goblin",
 		"type": "orc",

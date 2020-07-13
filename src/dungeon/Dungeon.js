@@ -2,7 +2,7 @@ export class Dungeon {
 
   constructor() {
     this.floors = [];
-    this.noFloors = 5;
+    this.noFloors = 3;
     this.noRooms = 10;
   }
 
@@ -19,11 +19,11 @@ export class Dungeon {
   // Create rooms for a floor
   generateRooms(floorId) {
     const rooms = [];
-    for (let i = 1; i < this.noRooms; i++) {
+    for (let i = 1; i <= this.noRooms; i++) {
       rooms.push({
         floor: floorId,
         id: i,
-        key: 'room' + i,
+        key: `dungeon-${floorId}-${i}`,
         music: 'dungeonMusic'
       })
     }

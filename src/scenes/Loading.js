@@ -33,8 +33,13 @@ export class Loading extends Phaser.Scene {
     this.load.json('enemyData', 'assets/data/enemies.json');
     this.load.json('weaponData', 'assets/data/weapons.json');
     this.load.json('roomData', 'assets/data/rooms.json');
-    for (let i = 1; i <= 10; i++) {
-      this.load.tilemapTiledJSON(`room${i}`, `assets/rooms/basic${i}.json`);
+
+    const floors = 3;
+    const rooms = 10;
+    for (let i = 1; i <= floors; i++) {
+      for (let ii = 1; ii <= rooms; ii++) {
+        this.load.tilemapTiledJSON(`dungeon-${i}-${ii}`, `assets/rooms/dungeon-${i}-${ii}.json`);
+      }
     }
 
     const loadingBar = this.add.graphics({
