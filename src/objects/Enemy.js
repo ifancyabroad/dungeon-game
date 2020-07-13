@@ -12,16 +12,14 @@ export class Enemy extends Entity {
       .setBounce(0.5);
 
     // Particle emitter for death animation
-    this.emitter = this.scene.particles.createEmitter({
-      frame: ['frames/skull.png'],
-      angle: { min: 240, max: 300 },
-      speed: { min: 40, max: 60 },
-      quantity: { min: 2, max: 10 },
-      lifespan: 1200,
-      alpha: { start: 1, end: 0 },
-      scale: { min: 0.05, max: 0.4 },
-      rotate: { start: 0, end: 360, ease: 'Back.easeOut' },
-      gravityY: 80,
+    this.particles = this.scene.add.particles(`${data.type}-blood`).setDepth(5);
+    this.emitter = this.particles.createEmitter({
+      angle: { min: 180, max: 360 },
+      speed: { min: 15, max: 30 },
+      quantity: { min: 10, max: 30 },
+      lifespan: 600,
+      scale: { start: 0.3, end: 0.1 },
+      gravityY: 50,
       on: false
     });
 

@@ -17,9 +17,6 @@ export class Room extends Phaser.Scene {
     this.mainScene = data.scene;
     this.cleared = false;
 
-    // Particle manager
-    this.particles = this.add.particles('dungeon-sprites').setDepth(5);
-
     this.startMusic(data.room.music);
     this.generateRoom();
     this.generatePlayer(data.player);

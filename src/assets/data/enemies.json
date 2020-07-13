@@ -2,6 +2,7 @@
 	{
 		"name": "Skeleton",
 		"sprite": "skelet",
+		"type": "undead",
 		"animations": [
 			"skelet_run",
 			"skelet_idle"
@@ -19,6 +20,7 @@
 	{
 		"name": "Orc Warrior",
 		"sprite": "orc_warrior",
+		"type": "orc",
 		"animations": [
 			"orc_warrior_run",
 			"orc_warrior_idle"
@@ -36,6 +38,7 @@
 	{
 		"name": "Goblin",
 		"sprite": "goblin",
+		"type": "orc",
 		"animations": [
 			"goblin_run",
 			"goblin_idle"
