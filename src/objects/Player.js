@@ -31,11 +31,6 @@ export class Player extends Entity {
       speed: data.speed,
       size: data.size
     });
-
-    // UI setup
-    this.setHearts();
-    this.setScore();
-    this.setGold();
   }
 
   update() {
@@ -52,77 +47,16 @@ export class Player extends Entity {
     }
   }
 
-  // Add hearts display
-  setHearts() {
-    this.hearts = [];
-    let x = 10;
-    let y = 10;
-    const maxHearts = this.getData('maxLives') / 2;
-    const currentHearts = this.getData('lives') / 2;
-    for (let i = 0; i < maxHearts; i++) {
-      if (currentHearts >= i + 1) {
-        this.hearts.push(this.scene.add.image(x, y, 'dungeon-sprites', 'frames/ui_heart_full.png'));
-      } else if (i + 1 - currentHearts === 0.5) {
-        this.hearts.push(this.scene.add.image(x, y, 'dungeon-sprites', 'frames/ui_heart_half.png'));
-      } else {
-        this.hearts.push(this.scene.add.image(x, y, 'dungeon-sprites', 'frames/ui_heart_empty.png'));
-      }
-      x += 16;
-    }
-  }
-
-  // Update player hearts in the UI
-  updateHearts() {
-    const maxHearts = this.getData('maxLives') / 2;
-    const currentHearts = this.getData('lives') / 2;
-    for (let i = 0; i < maxHearts; i++) {
-      if (currentHearts >= i + 1) {
-        this.hearts[i].setTexture('dungeon-sprites', 'frames/ui_heart_full.png');
-      } else if (i + 1 - currentHearts === 0.5) {
-        this.hearts[i].setTexture('dungeon-sprites', 'frames/ui_heart_half.png');
-      } else {
-        this.hearts[i].setTexture('dungeon-sprites', 'frames/ui_heart_empty.png');
-      }
-    }
-  }
-
-  // Add score display
-  setScore() {
-    let x = this.scene.game.renderer.width - 5;
-    let y = 10;
-    this.scoreDisplay = this.scene.add.text(x, y, `Score: ${this.getData('score')}`, {
-      fontFamily: '"Helvetica"',
-      fontSize: '14px',
-      fill: '#ddd',
-      stroke: '#101319',
-      strokeThickness: 4
-    }).setOrigin(1, 0.5);
-  }
-
   // Update score
   updateScore(points) {
     this.data.values.score += points;
-    this.scoreDisplay.setText(`Score: ${this.getData('score')}`);
-  }
-
-  // Add gold display
-  setGold() {
-    let x = 100;
-    let y = 10;
-    const goldIcon = this.scene.add.image(x, y - 1, 'dungeon-sprites', 'frames/coin_anim_f0.png').setScale(1.5);
-    this.goldDisplay = this.scene.add.text(goldIcon.x + goldIcon.width * 2 + 2, y, this.getData('gold'), {
-      fontFamily: '"Helvetica"',
-      fontSize: '14px',
-      fill: '#ddd',
-      stroke: '#101319',
-      strokeThickness: 4
-    }).setOrigin(1, 0.5);
+    this.scene.events.emit('updateScore');
   }
 
   // Update gold
   updateGold(gold) {
     this.data.values.gold += gold;
-    this.goldDisplay.setText(this.getData('gold'));
+    this.scene.events.emit('updateGold');
   }
 
   // Move player according to cursor keys
@@ -172,7 +106,7 @@ export class Player extends Entity {
       this.stunned();
       this.flash();
       this.data.values.lives--;
-      this.updateHearts();
+      this.scene.events.emit('updateHearts');
     }
   }
 

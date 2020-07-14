@@ -27,7 +27,7 @@ export class Loading extends Phaser.Scene {
     this.load.audio('dungeonMusic', 'assets/sounds/POL-fortress-short.wav');
 
     // Images
-    this.load.image('castle', 'assets/images/background.png');
+    this.load.image('caves', 'assets/images/background.png');
     this.load.image('logo', 'assets/images/logo.png');
 
     // JSON

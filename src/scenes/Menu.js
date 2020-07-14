@@ -11,27 +11,35 @@ export class Menu extends Phaser.Scene {
       volume: 0.1
     });
 
-    this.add.image(this.game.renderer.width, 0, 'castle')
-      .setScale(0.6)
-      .setOrigin(1, 0)
+    this.add.image(0, 0, 'caves')
+      .setScale(0.5)
+      .setOrigin(0, 0)
       .setDepth(0);
 
-    this.add.image(this.game.renderer.width / 2, 60, 'logo')
-      .setScale(0.5);
+    const logo = this.add.image(this.game.renderer.width / 2, 80, 'logo')
+      .setScale(0.6);
+    this.tweens.add({
+      targets: logo ,
+      scale: 0.55,
+      ease: 'Linear',
+      duration: 1000,
+      yoyo: true,
+      repeat: -1
+    });
 
     this.options = this.add.group([
       this.add.text(this.game.renderer.width / 2, 160, 'Start', {
-        fontFamily: '"Helvetica"',
-        fontSize: '16px',
+        fontFamily: '"ThaleahFat"',
+        fontSize: '20px',
         fill: '#ddd',
-        stroke: '#101319',
+        stroke: '#000',
         strokeThickness: 4
       }).setOrigin(0.5),
-      this.add.text(this.game.renderer.width / 2, 200, 'Controls', {
-        fontFamily: '"Helvetica"',
-        fontSize: '16px',
+      this.add.text(this.game.renderer.width / 2, 190, 'Controls', {
+        fontFamily: '"ThaleahFat"',
+        fontSize: '20px',
         fill: '#ddd',
-        stroke: '#101319',
+        stroke: '#000',
         strokeThickness: 4
       }).setOrigin(0.5)
     ]);
@@ -39,8 +47,8 @@ export class Menu extends Phaser.Scene {
     this.currentIndex = 0;
     const option = this.options.getChildren()[this.currentIndex];
     this.cursor = this.add.container(option.x, option.y, [
-      this.add.sprite(-(option.width / 2 + 24), 0, 'dungeon-sprites', 'frames/weapon_knight_sword.png').setAngle(90),
-      this.add.sprite(option.width / 2 + 24, 0, 'dungeon-sprites', 'frames/weapon_knight_sword.png').setAngle(270)
+      this.add.sprite(-(option.width / 2 + 24), 4, 'dungeon-sprites', 'frames/weapon_spear.png').setAngle(90),
+      this.add.sprite(option.width / 2 + 24, 4, 'dungeon-sprites', 'frames/weapon_spear.png').setAngle(270)
     ]);
 
     this.keys = this.input.keyboard.addKeys({
