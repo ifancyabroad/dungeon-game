@@ -80,6 +80,7 @@ export class Room extends Phaser.Scene {
 
     // Launch HUD
     this.scene.launch('hud', { room: this, player: this.player });
+    this.scene.bringToTop('hud');
   }
 
   // Populate room with enemies
