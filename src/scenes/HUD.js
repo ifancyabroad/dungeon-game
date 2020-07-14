@@ -58,10 +58,10 @@ export class HUD extends Phaser.Scene {
   // Add score display
   setScore() {
     let x = this.game.renderer.width - 5;
-    let y = 5;
+    let y = 10;
     this.scoreDisplay = this.add.text(x, y, `Score: ${this.player.getData('score')}`, {
-      fontFamily: '"ThaleahFat"',
-      fontSize: '20px'
+      fontFamily: 'EquipmentPro',
+      fontSize: '18px'
     }).setOrigin(1, 0.5);
   }
 
@@ -73,11 +73,11 @@ export class HUD extends Phaser.Scene {
   // Add gold display
   setGold() {
     let x = 80;
-    let y = 5;
-    const goldIcon = this.add.image(x, y + 4, 'dungeon-sprites', 'frames/coin_anim_f0.png').setScale(1.5);
+    let y = 10;
+    const goldIcon = this.add.image(x, y, 'dungeon-sprites', 'frames/coin_anim_f0.png').setScale(1.5);
     this.goldDisplay = this.add.text(goldIcon.x + goldIcon.width + 2, y, this.player.getData('gold'), {
-      fontFamily: '"ThaleahFat"',
-      fontSize: '20px'
+      fontFamily: 'EquipmentPro',
+      fontSize: '18px'
     }).setOrigin(0, 0.5);
   }
 

@@ -53,7 +53,7 @@ export class Loading extends Phaser.Scene {
       loadingBar.fillRect(0, this.game.renderer.height / 2, this.game.renderer.width * percent, 50);
     })
 
-    this.add.text(20, 20, 'Loading game...');
+    this.add.text(40, 100, 'Loading...', { fontFamily: 'EquipmentPro' });
   }
 
   create() {

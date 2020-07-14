@@ -29,14 +29,14 @@ export class Menu extends Phaser.Scene {
 
     this.options = this.add.group([
       this.add.text(this.game.renderer.width / 2, 160, 'Start', {
-        fontFamily: '"ThaleahFat"',
+        fontFamily: 'EquipmentPro',
         fontSize: '20px',
         fill: '#ddd',
         stroke: '#000',
         strokeThickness: 4
       }).setOrigin(0.5),
       this.add.text(this.game.renderer.width / 2, 190, 'Controls', {
-        fontFamily: '"ThaleahFat"',
+        fontFamily: 'EquipmentPro',
         fontSize: '20px',
         fill: '#ddd',
         stroke: '#000',
@@ -47,8 +47,8 @@ export class Menu extends Phaser.Scene {
     this.currentIndex = 0;
     const option = this.options.getChildren()[this.currentIndex];
     this.cursor = this.add.container(option.x, option.y, [
-      this.add.sprite(-(option.width / 2 + 24), 4, 'dungeon-sprites', 'frames/weapon_spear.png').setAngle(90),
-      this.add.sprite(option.width / 2 + 24, 4, 'dungeon-sprites', 'frames/weapon_spear.png').setAngle(270)
+      this.add.sprite(-(option.width / 2 + 24), 0, 'dungeon-sprites', 'frames/weapon_spear.png').setAngle(90),
+      this.add.sprite(option.width / 2 + 24, 0, 'dungeon-sprites', 'frames/weapon_spear.png').setAngle(270)
     ]);
 
     this.keys = this.input.keyboard.addKeys({
