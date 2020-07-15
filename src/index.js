@@ -3,6 +3,7 @@ import { Loading } from "./scenes/Loading";
 import { Menu } from "./scenes/Menu";
 import { Game } from "./scenes/Game";
 import { HUD } from "./scenes/HUD";
+import { Transition } from "./scenes/Transition";
 import { GameOver } from "./scenes/GameOver";
 import { Room } from "./scenes/Room";
 // import logoImg from "./assets/logo.png";
@@ -17,7 +18,7 @@ const config = {
     height: 288
   },
   backgroundColor: 0x000000,
-  scene: [Loading, Menu, Game, HUD, Room, GameOver],
+  scene: [Loading, Menu, Game, HUD, Room, Transition, GameOver],
   pixelArt: true,
   physics: {
     default: 'arcade'

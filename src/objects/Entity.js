@@ -20,7 +20,7 @@ export class Entity extends Phaser.GameObjects.Container {
       .existing(this)
 
     // Create and add shadow
-    const shadow = this.scene.add.ellipse(0, this.sprite.height / 2, 12, 3, 0x111111, 0.8);
+    const shadow = this.scene.add.ellipse(0, this.sprite.height / 2, this.sprite.width - 4, 3, 0x111111, 0.8);
     this.add(shadow);
     this.sendToBack(shadow);
   }

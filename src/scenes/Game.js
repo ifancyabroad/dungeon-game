@@ -19,9 +19,6 @@ export class Game extends Phaser.Scene {
     this.gameStart();
   }
 
-  update() {
-  }
-
   // Create the dungeon
   createDungeon() {
     const dungeon = new Dungeon();
@@ -29,14 +26,16 @@ export class Game extends Phaser.Scene {
     return dungeon;
   }
 
+  // Transition scene that launches the room
   gameStart() {
-    this.scene.launch('room', {
-      room: this.dungeon.floors[0].rooms[0],
-      scene: this,
-      player: this.playerData
-      // weapon: 'Hammer'
+    this.scene.launch('transition', {
+      floor: 1,
+      scene: {
+        room: this.dungeon.floors[0].rooms[9],
+        player: this.playerData,
+        weapon: 'Mace'
+      }
     });
-    this.scene.bringToTop('room');
   }
 
   // Game over screen
