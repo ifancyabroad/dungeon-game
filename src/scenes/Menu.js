@@ -41,6 +41,13 @@ export class Menu extends Phaser.Scene {
         fill: '#ddd',
         stroke: '#000',
         strokeThickness: 4
+      }).setOrigin(0.5),
+      this.add.text(this.game.renderer.width / 2, 220, 'Credits', {
+        fontFamily: 'EquipmentPro',
+        fontSize: '20px',
+        fill: '#ddd',
+        stroke: '#000',
+        strokeThickness: 4
       }).setOrigin(0.5)
     ]);
 
@@ -83,6 +90,10 @@ export class Menu extends Phaser.Scene {
         case 1:
           this.controls();
           break;
+
+        case 2:
+          this.credits();
+          break;
       
         default:
           break;
@@ -103,7 +114,6 @@ export class Menu extends Phaser.Scene {
   }
 
   start() {
-    // Fade out
     this.cameras.main.fadeOut(600);
     this.cameras.main.once('camerafadeoutcomplete', () => {
       this.scene.start('playGame', {
@@ -121,5 +131,9 @@ export class Menu extends Phaser.Scene {
 
   controls() {
 
+  }
+
+  credits() {
+    this.scene.launch('credits');
   }
 }
