@@ -11,8 +11,14 @@ export class Player extends Entity {
       .setOffset(0, 6);
 
     // Create movement keys
-    this.cursorKeys = scene.input.keyboard.createCursorKeys();
-    this.spacebar = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    this.pointer = scene.input.activePointer;
+    this.controls = scene.input.keyboard.addKeys({
+      'up': Phaser.Input.Keyboard.KeyCodes.W,
+      'down': Phaser.Input.Keyboard.KeyCodes.S,
+      'left': Phaser.Input.Keyboard.KeyCodes.A,
+      'right': Phaser.Input.Keyboard.KeyCodes.D,
+      'attack': Phaser.Input.Keyboard.KeyCodes.SPACE
+    })
 
     // States
     /*  0: Default state 
@@ -62,26 +68,31 @@ export class Player extends Entity {
   // Move player according to cursor keys
   controlManager() {
 
+    // Face the pointer
+    if (this.x > this.pointer.x) {
+      this.sprite.setFlipX(true);
+    } else {
+      this.sprite.setFlipX(false);
+    }
+
     // Attack if spacebar is pressed
-    if (Phaser.Input.Keyboard.JustDown(this.spacebar) && this.weapon) {
+    if ((Phaser.Input.Keyboard.JustDown(this.controls.attack) || this.pointer.isDown) && this.weapon) {
       this.weapon.attack(this);
     }
 
     // Move left and right
-    if (this.cursorKeys.left.isDown) {
-      this.sprite.setFlipX(true);
+    if (this.controls.left.isDown) {
       this.body.setVelocityX(-this.getData('speed'));
-    } else if (this.cursorKeys.right.isDown) {
-      this.sprite.setFlipX(false);
+    } else if (this.controls.right.isDown) {
       this.body.setVelocityX(this.getData('speed'));
     } else {
       this.body.setVelocityX(0);
     }
 
     // Move up and down
-    if (this.cursorKeys.up.isDown) {
+    if (this.controls.up.isDown) {
       this.body.setVelocityY(-this.getData('speed'));
-    } else if (this.cursorKeys.down.isDown) {
+    } else if (this.controls.down.isDown) {
       this.body.setVelocityY(this.getData('speed'));
     } else {
       this.body.setVelocityY(0);

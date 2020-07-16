@@ -158,7 +158,7 @@ export class Room extends Phaser.Scene {
     this.physics.world.addCollider(this.enemies);
     this.physics.world.addCollider(this.enemies, this.wallsBelowLayer);
     this.physics.world.addCollider(this.enemies, this.wallsAboveLayer);
-    // this.physics.world.createDebugGraphic();
+    this.physics.world.createDebugGraphic();
   }
 
   // Room completed

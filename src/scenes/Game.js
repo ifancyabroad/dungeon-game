@@ -31,9 +31,9 @@ export class Game extends Phaser.Scene {
     this.scene.launch('transition', {
       floor: 1,
       scene: {
-        room: this.dungeon.floors[0].rooms[9],
+        room: this.dungeon.floors[0].rooms[0],
         player: this.playerData,
-        weapon: 'Mace'
+        weapon: null
       }
     });
   }
