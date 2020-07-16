@@ -93,6 +93,7 @@ export class Weapon extends Phaser.GameObjects.Sprite {
 
   // Weapon dropped
   setUnequipped(player) {
+    this.scene.sound.play('weapon-drop');
     this.setState(3)
       .setAngle()
       .setPosition(player.body.x + this.width / 2, player.body.y + this.height / 2)
@@ -109,6 +110,9 @@ export class Weapon extends Phaser.GameObjects.Sprite {
 
       // Set in use to stop multiple attacks at once
       this.setState(2);
+
+      // Play swing sound
+      this.scene.sound.play('weapon-swing');
 
       // Set the collision
       this.scene.physics.overlap(this, this.scene.enemies, player.hit, null, player);

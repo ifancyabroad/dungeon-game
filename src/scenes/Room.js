@@ -22,7 +22,7 @@ export class Room extends Phaser.Scene {
     this.generateRoom();
     this.generatePlayer(data.player);
     this.generateEnemies();
-    this.generateWeapons(data.weapon);
+    this.generateWeapons();
     this.generateItems();
     this.generateSpikes();
     this.setCollision();
@@ -98,10 +98,11 @@ export class Room extends Phaser.Scene {
   }
 
   // Populate room with any weapons
-  generateWeapons(weapon) {
+  generateWeapons() {
     this.weapons = this.add.group();
 
     // Currently equipped weapon
+    const weapon = this.player.getData('weapon');
     if (weapon) {
       const data = this.mainScene.weaponData.find(w => w.name === weapon)
       const playerWeapon = new Weapon(this, this.player.x, this.player.y, 'dungeon-sprites', `frames/weapon_${data.sprite}.png`, data);

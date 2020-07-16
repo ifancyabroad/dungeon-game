@@ -123,7 +123,8 @@ export class Menu extends Phaser.Scene {
           lives: 6,
           maxLives: 6,
           speed: 100,
-          size: { width: 16, height: 16 }
+          size: { width: 16, height: 16 },
+          weapon: 'Sword'
         }
       });
     }, this);

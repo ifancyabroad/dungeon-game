@@ -34,7 +34,8 @@ export class Player extends Entity {
       lives: data.lives,
       maxLives: data.maxLives,
       speed: data.speed,
-      size: data.size
+      size: data.size,
+      weapon: data.weapon
     });
   }
 
@@ -143,6 +144,7 @@ export class Player extends Entity {
       this.weapon.setUnequipped(this);
     }
     this.weapon = weapon;
+    this.setData('weapon', this.weapon.name)
     this.add(this.weapon);
   }
 

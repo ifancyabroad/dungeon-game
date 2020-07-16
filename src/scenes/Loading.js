@@ -14,6 +14,8 @@ export class Loading extends Phaser.Scene {
 
     // Sounds
     this.load.audio('coin', 'assets/sounds/coin.mp3');
+    this.load.audio('weapon-swing', 'assets/sounds/weapon-swing.mp3');
+    this.load.audio('weapon-drop', 'assets/sounds/weapon-drop.mp3');
     this.load.audio('door-open', 'assets/sounds/door-open.wav');
     this.load.audio('stairs-open', 'assets/sounds/stairs-open.mp3');
     this.load.audio('orc-hit', 'assets/sounds/orc-hit.mp3');

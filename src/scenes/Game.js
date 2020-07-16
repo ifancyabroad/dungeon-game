@@ -32,8 +32,7 @@ export class Game extends Phaser.Scene {
       floor: 1,
       scene: {
         room: this.dungeon.floors[0].rooms[0],
-        player: this.playerData,
-        weapon: null
+        player: this.playerData
       }
     });
   }
