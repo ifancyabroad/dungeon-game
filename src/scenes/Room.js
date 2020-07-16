@@ -106,7 +106,7 @@ export class Room extends Phaser.Scene {
       const data = this.mainScene.weaponData.find(w => w.name === weapon)
       const playerWeapon = new Weapon(this, this.player.x, this.player.y, 'dungeon-sprites', `frames/weapon_${data.sprite}.png`, data);
       this.weapons.add(playerWeapon);
-      playerWeapon.equip(playerWeapon, this.player);
+      playerWeapon.setEquipped(playerWeapon, this.player);
     }
 
     // Room weapons

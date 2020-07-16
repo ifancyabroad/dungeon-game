@@ -14,7 +14,8 @@ export class Weapon extends Phaser.GameObjects.Sprite {
 
     // Set hitbox and collision
     this.scene.physics.world.enable(this);
-    this.collider = this.scene.physics.world.addOverlap(this, this.scene.player, this.equip, null, this);
+    // this.collider = new Collider(this.scene.physics.world, true, this, this.scene.player, this.scene.player.pickup, null, this);
+    this.collider = this.scene.physics.world.addOverlap(this, this.scene.player, this.setEquipped, null, this);
     
     // States
     /*  0: Not equipped/active
@@ -48,7 +49,7 @@ export class Weapon extends Phaser.GameObjects.Sprite {
 
     const vx = Math.cos(angle) * 10;
     const vy = Math.sin(angle) * 10;
-    this.body.setOffset(vx - (this.getData('size').width / 2), vy + (this.getData('size').height / 2));
+    this.body.setOffset(vx - 10, vy + 8);
   }
 
   // Check if in contact with player
@@ -61,6 +62,10 @@ export class Weapon extends Phaser.GameObjects.Sprite {
   // Decide what to do
   stateManager() {
     switch (this.state) {
+      case 0:
+        
+        break;
+
       case 1:
         this.setSprite();
         break;
@@ -76,20 +81,18 @@ export class Weapon extends Phaser.GameObjects.Sprite {
   }
 
   // Weapon picked up
-  equip(weapon, player) {
+  setEquipped(weapon, player) {
     if (this.state === 0) {
-      player.pickup(this)
       this.setState(1)
         .setPosition(0, player.height / 2);
-      this.body
-        .setCircle(this.getData('size').width);
+      this.body.setCircle(this.getData('size').width, -10, 8);
       this.scene.physics.world.removeCollider(this.collider);
+      player.equip(this);
     }
   }
 
   // Weapon dropped
-  unequip(player) {
-    player.drop(this);
+  setUnequipped(player) {
     this.setState(3)
       .setAngle()
       .setPosition(player.body.x + this.width / 2, player.body.y + this.height / 2)
@@ -97,8 +100,7 @@ export class Weapon extends Phaser.GameObjects.Sprite {
     this.body.setSize();
     this.body.preUpdate()
     this.scene.physics.world.colliders.add(this.collider);
-    this.scene.add
-      .existing(this);
+    this.scene.add.existing(this);
   }
 
   // Play attack animation

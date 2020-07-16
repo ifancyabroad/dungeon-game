@@ -7,8 +7,7 @@ export class Player extends Entity {
     super(scene, x, y, children, data);
 
     // Set physics body properties
-    this.body
-      .setOffset(0, 6);
+    this.body.setOffset(0, 6);
 
     // Create movement keys
     this.pointer = scene.input.activePointer;
@@ -138,18 +137,13 @@ export class Player extends Entity {
   }
 
   // Pickup a weapon
-  pickup(weapon) {
+  equip(weapon, player) {
     if (this.weapon) {
-      this.weapon.unequip(this);
+      this.remove(this.weapon);
+      this.weapon.setUnequipped(this);
     }
-    this.add(weapon);
-    this.sendToBack(weapon);
     this.weapon = weapon;
-  }
-
-  // Drop a weapon
-  drop(weapon) {
-    this.remove(weapon);
+    this.add(this.weapon);
   }
 
   // Destroy game object and change scenes
