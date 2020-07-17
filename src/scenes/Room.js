@@ -169,6 +169,7 @@ export class Room extends Phaser.Scene {
   setCollision() {
     this.wallsBelowLayer.setCollisionByProperty({ collides: true });
     this.wallsAboveLayer.setCollisionByProperty({ collides: true });
+    this.physics.world.addCollider(this.player, this.npcs);
     this.physics.world.addCollider(this.player, this.belowLayer);
     this.physics.world.addCollider(this.player, this.wallsBelowLayer);
     this.physics.world.addCollider(this.player, this.wallsAboveLayer);

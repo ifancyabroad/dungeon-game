@@ -8,6 +8,7 @@ export class NPC extends Entity {
 
     // Set physics body properties
     this.body.setOffset(0, 6);
+    this.body.immovable = true;
 
     // Custom variables
     this.setData({
