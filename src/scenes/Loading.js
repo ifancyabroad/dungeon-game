@@ -7,6 +7,7 @@ export class Loading extends Phaser.Scene {
   preload() {
     // Sprites
     this.load.atlas('dungeon-sprites', 'assets/texture-atlas/0x72_DungeonTilesetII_v1.3.png', 'assets/texture-atlas/0x72_DungeonTilesetII_v1.3.json');
+    this.load.atlas('npc-sprites', 'assets/npcs/knights.png', 'assets/npcs/knights.json');
     this.load.image('tiles', 'assets/rooms/0x72_DungeonTilesetII_v1.3.png');
     this.load.image('orc-blood', 'assets/textures/orc-blood.png');
     this.load.image('undead-blood', 'assets/textures/undead-blood.png');
