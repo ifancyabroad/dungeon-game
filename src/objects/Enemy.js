@@ -38,6 +38,7 @@ export class Enemy extends Entity {
       health: data.stats.health,
       maxHealth: data.stats.health,
       speed: data.stats.speed,
+      size: data.size,
       sprite: data.sprite
     });
   }

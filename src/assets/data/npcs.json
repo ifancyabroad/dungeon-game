@@ -1,0 +1,15 @@
+[
+	{
+		"name": "Herald",
+		"sprite": "Herald",
+		"type": "human",
+		"animations": [
+			"Herald_Walk",
+			"Herald_Idle"
+		],
+		"size": {
+			"width": 12,
+			"height": 16
+		}
+	}
+]

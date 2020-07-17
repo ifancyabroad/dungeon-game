@@ -54,31 +54,26 @@
         }, 
         {
          "draworder":"topdown",
-         "id":7,
-         "name":"Items",
-         "objects":[],
-         "opacity":1,
-         "type":"objectgroup",
-         "visible":true,
-         "x":0,
-         "y":0
-        }, 
-        {
-         "draworder":"topdown",
-         "id":5,
-         "name":"Weapons",
+         "id":8,
+         "name":"NPC",
          "objects":[
                 {
                  "height":0,
-                 "id":5,
-                 "name":"Sword",
+                 "id":14,
+                 "name":"Herald",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"text",
+                         "type":"string",
+                         "value":"Hello and welcome to the dungeon... Good luck and that..."
+                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":103,
-                 "y":141
+                 "x":152,
+                 "y":70
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -120,11 +115,11 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":8,
- "nextobjectid":14,
+ "nextlayerid":9,
+ "nextobjectid":15,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.3.1",
+ "tiledversion":"1.4.1",
  "tileheight":16,
  "tilesets":[
         {
@@ -1328,6 +1323,6 @@
         }],
  "tilewidth":16,
  "type":"map",
- "version":1.2,
+ "version":1.4,
  "width":25
 }

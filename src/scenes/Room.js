@@ -1,6 +1,7 @@
 import { Weapon } from "../objects/Weapon";
 import { Player } from "../objects/Player";
 import { Enemy } from "../objects/Enemy";
+import { NPC } from "../objects/NPC";
 import { Coin } from "../objects/Coin";
 import { Spikes } from "../objects/Spikes";
 
@@ -22,6 +23,7 @@ export class Room extends Phaser.Scene {
     this.generateRoom();
     this.generatePlayer(data.player);
     this.generateEnemies();
+    this.generateNPCs();
     this.generateWeapons();
     this.generateItems();
     this.generateSpikes();
@@ -93,6 +95,20 @@ export class Room extends Phaser.Scene {
         const sprite = this.add.sprite(0, 0, 'dungeon-sprites', `frames/${data.sprite}_idle_anim_f0.png`);
         const enemy = new Enemy(this, object.x, object.y, [sprite], data);
         this.enemies.add(enemy);
+      });
+    }
+  }
+
+  // Populate room with NPC's
+  generateNPCs() {
+    this.npcs = this.add.group();
+    const npcLayer = this.room.getObjectLayer('NPC');
+    if (npcLayer) {
+      npcLayer.objects.forEach(object => {
+        const data = this.mainScene.npcData.find(npc => npc.name === object.name)
+        const sprite = this.add.sprite(0, 0, 'npc-sprites', `frames/${data.sprite}_Idle_1.png`);
+        const npc = new NPC(this, object.x, object.y, [sprite], data);
+        this.npcs.add(npc);
       });
     }
   }

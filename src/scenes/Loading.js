@@ -35,6 +35,7 @@ export class Loading extends Phaser.Scene {
 
     // JSON
     this.load.json('enemyData', 'assets/data/enemies.json');
+    this.load.json('npcData', 'assets/data/npcs.json');
     this.load.json('weaponData', 'assets/data/weapons.json');
     this.load.json('roomData', 'assets/data/rooms.json');
 
@@ -62,6 +63,7 @@ export class Loading extends Phaser.Scene {
   create() {
     this.generatePlayerAnimations();
     this.generateEnemyAnimations();
+    this.generateNPCAnimations();
     this.generateItemAnimations();
     this.generateSpikeAnimations();
     this.scene.start('menu');
@@ -112,6 +114,24 @@ export class Loading extends Phaser.Scene {
             start: 0,
             end: 3,
             prefix: `frames/${animation}_anim_f`, suffix: '.png'
+          }),
+          frameRate: 10,
+          repeat: -1
+        });
+      })
+    });
+  }
+
+  generateNPCAnimations() {
+    const npcData = this.cache.json.get('npcData');
+    npcData.forEach(npc => {
+      npc.animations.forEach(animation => {
+        this.anims.create({
+          key: animation,
+          frames: this.anims.generateFrameNames('npc-sprites', {
+            start: 1,
+            end: 4,
+            prefix: `frames/${animation}_`, suffix: '.png'
           }),
           frameRate: 10,
           repeat: -1
