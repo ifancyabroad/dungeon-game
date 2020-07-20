@@ -7,7 +7,7 @@
 			"skelet_run",
 			"skelet_idle"
 		],
-		"value": 10,
+		"value": 15,
 		"stats": {
 			"health": 100,
 			"speed": 50
@@ -15,6 +15,60 @@
 		"size": {
 			"width": 12,
 			"height": 16
+		}
+	},
+	{
+		"name": "Zombie",
+		"sprite": "zombie",
+		"type": "undead",
+		"animations": [
+			"zombie_run",
+			"zombie_idle"
+		],
+		"value": 30,
+		"stats": {
+			"health": 250,
+			"speed": 20
+		},
+		"size": {
+			"width": 12,
+			"height": 16
+		}
+	},
+	{
+		"name": "Tiny Zombie",
+		"sprite": "tiny_zombie",
+		"type": "undead",
+		"animations": [
+			"tiny_zombie_run",
+			"tiny_zombie_idle"
+		],
+		"value": 10,
+		"stats": {
+			"health": 160,
+			"speed": 30
+		},
+		"size": {
+			"width": 12,
+			"height": 8
+		}
+	},
+	{
+		"name": "Big Zombie",
+		"sprite": "big_zombie",
+		"type": "undead",
+		"animations": [
+			"big_zombie_run",
+			"big_zombie_idle"
+		],
+		"value": 150,
+		"stats": {
+			"health": 700,
+			"speed": 25
+		},
+		"size": {
+			"width": 18,
+			"height": 24
 		}
 	},
 	{
@@ -87,6 +141,78 @@
 		"size": {
 			"width": 12,
 			"height": 8
+		}
+	},
+	{
+		"name": "Wogol",
+		"sprite": "wogol",
+		"type": "demon",
+		"animations": [
+			"wogol_run",
+			"wogol_idle"
+		],
+		"value": 30,
+		"stats": {
+			"health": 250,
+			"speed": 80
+		},
+		"size": {
+			"width": 12,
+			"height": 16
+		}
+	},
+	{
+		"name": "Imp",
+		"sprite": "imp",
+		"type": "demon",
+		"animations": [
+			"imp_run",
+			"imp_idle"
+		],
+		"value": 20,
+		"stats": {
+			"health": 190,
+			"speed": 100
+		},
+		"size": {
+			"width": 12,
+			"height": 8
+		}
+	},
+	{
+		"name": "Chort",
+		"sprite": "chort",
+		"type": "demon",
+		"animations": [
+			"chort_run",
+			"chort_idle"
+		],
+		"value": 30,
+		"stats": {
+			"health": 300,
+			"speed": 50
+		},
+		"size": {
+			"width": 12,
+			"height": 16
+		}
+	},
+	{
+		"name": "Big Demon",
+		"sprite": "big_demon",
+		"type": "demon",
+		"animations": [
+			"big_demon_run",
+			"big_demon_idle"
+		],
+		"value": 300,
+		"stats": {
+			"health": 900,
+			"speed": 60
+		},
+		"size": {
+			"width": 18,
+			"height": 24
 		}
 	}
 ]
