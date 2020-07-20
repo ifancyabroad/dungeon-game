@@ -1,9 +1,9 @@
 export class Dungeon {
 
-  constructor() {
+  constructor(noFloors, noRooms) {
     this.floors = [];
-    this.noFloors = 3;
-    this.noRooms = 10;
+    this.noFloors = noFloors;
+    this.noRooms = noRooms;
   }
 
   // Generate the entire dungeon

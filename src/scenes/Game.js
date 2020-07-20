@@ -22,7 +22,7 @@ export class Game extends Phaser.Scene {
 
   // Create the dungeon
   createDungeon() {
-    const dungeon = new Dungeon();
+    const dungeon = new Dungeon(3, 5);
     dungeon.generateDungeon();
     return dungeon;
   }
