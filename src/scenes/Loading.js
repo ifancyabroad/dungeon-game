@@ -24,7 +24,7 @@ export class Loading extends Phaser.Scene {
     this.load.audio('undead-hit', 'assets/sounds/undead-hit.mp3');
     this.load.audio('undead-death', 'assets/sounds/undead-death.mp3');
     this.load.audio('demon-hit', 'assets/sounds/demon-hit.mp3');
-    this.load.audio('demon-death', 'assets/textures/demon-death.mp3');
+    this.load.audio('demon-death', 'assets/sounds/demon-death.mp3');
     this.load.audio('menuSelect', 'assets/sounds/select.mp3');
     this.load.audio('menuMusic', 'assets/sounds/POL-random-encounter-short.wav');
     this.load.audio('dungeonMusic', 'assets/sounds/POL-fortress-short.wav');

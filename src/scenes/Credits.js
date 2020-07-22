@@ -55,7 +55,7 @@ export class Credits extends Phaser.Scene {
     if (this.y > this.cameras.main.scrollY - 15) {
       this.cameras.main.scrollY += 1;
     } else {
-      this.scene.stop();
+      this.scene.start('menu');
     }
   }
 }

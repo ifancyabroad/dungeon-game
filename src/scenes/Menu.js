@@ -5,11 +5,17 @@ export class Menu extends Phaser.Scene {
   }
 
   create() {
-    this.music = this.sound.add('menuMusic');
-    this.music.play({
-      loop: true,
-      volume: 0.1
-    });
+    this.music = this.sound.sounds.find(sound => sound.key === 'menuMusic');
+    if (!this.music) {
+      this.music = this.sound.add('menuMusic');
+    }
+    if (!this.music.isPlaying) {
+      this.sound.stopAll();
+      this.music.play({
+        loop: true,
+        volume: 0.1
+      });
+    }
 
     this.add.image(0, 0, 'caves')
       .setScale(0.5)
@@ -135,6 +141,6 @@ export class Menu extends Phaser.Scene {
   }
 
   credits() {
-    this.scene.launch('credits');
+    this.scene.start('credits');
   }
 }
