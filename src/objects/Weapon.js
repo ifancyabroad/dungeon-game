@@ -82,7 +82,7 @@ export class Weapon extends Phaser.GameObjects.Sprite {
 
   // Weapon picked up
   setEquipped(weapon, player) {
-    if (this.state === 0) {
+    if (this.state === 0 && (!player.weapon || player.weapon.state === 1)) {
       this.setState(1)
         .setPosition(0, player.height / 2);
       this.body.setCircle(this.getData('size').width, -10, 8);
