@@ -6,9 +6,10 @@ export class Transition extends Phaser.Scene {
 
   create(data) {
     const floor = data.floor;
-    const scene = data.scene;
+    const room = data.room;
+    const player = data.player;
 
-    this.add.text(this.game.renderer.width / 2, this.game.renderer.height / 2, `Dungeon-${floor}`, {
+    this.add.text(this.game.renderer.width / 2, this.game.renderer.height / 2, `Floor ${floor.id} - ${floor.name}`, {
       fontFamily: 'EquipmentPro',
       fontSize: '24px'
     }).setOrigin(0.5);
@@ -18,9 +19,8 @@ export class Transition extends Phaser.Scene {
       this.cameras.main.fadeOut(600);
       this.cameras.main.once('camerafadeoutcomplete', () => {
         this.scene.start('room', {
-          room: scene.room,
-          player: scene.player,
-          weapon: scene.weapon
+          room: room,
+          player: player
         });
       }, this);
     });

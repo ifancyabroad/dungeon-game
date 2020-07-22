@@ -22,7 +22,11 @@ export class Game extends Phaser.Scene {
 
   // Create the dungeon
   createDungeon() {
-    const dungeon = new Dungeon(3, 5);
+    const dungeon = new Dungeon([
+      { name: 'Orc Perimeter', music: 'dungeonMusic', rooms: 5 },
+      { name: 'Undead Prison', music: 'dungeonMusic', rooms: 5 },
+      { name: 'Demon Cave', music: 'dungeonMusic', rooms: 5 }
+    ]);
     dungeon.generateDungeon();
     return dungeon;
   }
@@ -30,11 +34,9 @@ export class Game extends Phaser.Scene {
   // Transition scene that launches the room
   gameStart() {
     this.scene.launch('transition', {
-      floor: 1,
-      scene: {
-        room: this.dungeon.floors[0].rooms[0],
-        player: this.playerData
-      }
+      floor: this.dungeon.floors[0],
+      room: this.dungeon.floors[0].rooms[0],
+      player: this.playerData
     });
   }
 

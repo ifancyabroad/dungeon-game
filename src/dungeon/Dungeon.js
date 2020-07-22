@@ -1,33 +1,43 @@
 export class Dungeon {
 
-  constructor(noFloors, noRooms) {
+  constructor(floorData) {
     this.floors = [];
-    this.noFloors = noFloors;
-    this.noRooms = noRooms;
+    this.floorData = floorData;
   }
 
   // Generate the entire dungeon
   generateDungeon() {
-    for (let i = 1; i <= this.noFloors; i++) {
+    let id = 1;
+    for (const floor of this.floorData) {
       this.floors.push({
-        id: i,
-        rooms: this.generateRooms(i)
+        id: id,
+        name: floor.name,
+        rooms: this.generateRooms(id, floor)
       });
+      id++;
     }
   }
 
   // Create rooms for a floor
-  generateRooms(floorId) {
+  generateRooms(id, floor) {
     const rooms = [];
-    for (let i = 1; i <= this.noRooms; i++) {
+    for (let i = 1; i <= floor.rooms; i++) {
       rooms.push({
-        floor: floorId,
+        floor: id,
         id: i,
-        key: `dungeon-${floorId}-${i}`,
-        music: 'dungeonMusic'
+        key: `dungeon-${id}-${i}`,
+        music: floor.music,
+        boss: i === floor.rooms,
+        shop: false
       })
     }
     return rooms;
+  }
+
+  // Get floor
+  getFloor(floorId) {
+    const floor = this.floors.find(f => f.id === floorId);
+    return floor;
   }
 
   // Get room

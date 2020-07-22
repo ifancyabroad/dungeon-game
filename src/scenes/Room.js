@@ -15,8 +15,8 @@ export class Room extends Phaser.Scene {
     this.roomKey = data.room.key;
     this.roomId = data.room.id;
     this.floorId = data.room.floor
+    this.bossRoom = data.room.boss;
     this.mainScene = this.scene.get('playGame');
-    this.bossRoom = this.roomId === this.mainScene.dungeon.noRooms;
     this.cleared = false;
 
     this.startMusic(data.room.music);
@@ -231,8 +231,7 @@ export class Room extends Phaser.Scene {
   nextRoom() {
     this.scene.restart({
       room: this.mainScene.dungeon.getRoom(this.floorId, this.roomId + 1),
-      player: this.player.data.getAll(),
-      weapon: this.player.weapon ? this.player.weapon.name : null
+      player: this.player.data.getAll()
     });
   }
 
@@ -244,12 +243,9 @@ export class Room extends Phaser.Scene {
     this.cameras.main.fadeOut(600);
     this.cameras.main.once('camerafadeoutcomplete', () => {
       this.scene.start('transition', {
-        floor: this.floorId + 1,
-        scene: {
-          room: this.mainScene.dungeon.getRoom(this.floorId + 1, 1),
-          player: this.player.data.getAll(),
-          weapon: this.player.weapon ? this.player.weapon.name : null
-        }
+        floor: this.mainScene.dungeon.getFloor(this.floorId + 1),
+        room: this.mainScene.dungeon.getRoom(this.floorId + 1, 1),
+        player: this.player.data.getAll()
       });
     }, this);
   }
